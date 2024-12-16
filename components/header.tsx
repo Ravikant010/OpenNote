@@ -18,7 +18,7 @@ interface Props{
 }
 export function Header({toggleMenu, isShowMenu}:Props) {
   return ( 
-    <header className={`sticky top-0 z-10 backdrop-blur-sm bg-white/80 dark:bg-[#18191B] w-full bg-opacity-40 rounded-lg ${isShowMenu ? "hidden" : "flex"} transition-all duration-300 ease-in-out`} >
+    <header className={`sticky top-0 z-10 backdrop-blur-sm bg-[#FDFEFD] dark:bg-[#18191B] w-full rounded-lg ${isShowMenu ? "hidden" : "flex"} transition-all duration-300 ease-in-out`} >
       <div className="p-3 flex lg:flex-col w-full max-w-screen-2xl mx-auto md:flex-row md:items-center md:p-4 md:gap-6 gap-4  ">
         {/* Left Section */}
         <div className="flex items-center w-full gap-3  py-2 font-[BigBlueTerm437NerdFont]">

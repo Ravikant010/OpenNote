@@ -8,9 +8,11 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    /* --background: 0 0% 100%; */
+    --background: 140 13% 95%;
     --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --card : 120 33% 99%;
+    /* --card: 0 0% 100%; */
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
@@ -35,9 +37,13 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    --background: 240 10% 3.9%;
+    /* --background: 240 10% 3.9%; */
+    --background:180 5% 4%;
+    /* --foreground: 210, 5%, 9%; */
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
+    
+    --card: 210 5% 9%;
+    /* --card: 240 10% 3.9%; */
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
@@ -81,3 +87,24 @@ body {
 body{
   padding:  5px 2px;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* dark theme 
+#0A0B0B
+#151617
+#232426
+#323337
+#DFE1E2
+#DADCDE */
+
+
+/* liggth one 
+#FDFEFD
+#F2F5F3
+#FBFDFC
+#282A2A
+#303231
+#787F99 */

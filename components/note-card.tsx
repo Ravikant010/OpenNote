@@ -13,7 +13,7 @@ type Props = {};
 
 export default function NoteCard({}: Props) {
   return (
-    <Card className="rounded-3xl bg-[#18191B] border-none my-2">
+    <Card className="rounded-3xl  border-none my-2">
       <CardHeader>
         <CardTitle>Name</CardTitle>
         <span>username</span>
