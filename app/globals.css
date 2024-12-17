@@ -84,9 +84,9 @@ body {
   font-display: swap;
 }
 
-body{
+/* body{
   padding:  5px 2px;
-}
+} */
 
 ::-webkit-scrollbar {
   display: none;
@@ -108,3 +108,10 @@ body{
 #282A2A
 #303231
 #787F99 */
+
+.ql-editor{
+  height: 100%;
+}
+.ql-editor:focus{
+  outline: none;
+}
