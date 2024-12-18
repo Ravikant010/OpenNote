@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {};
 
-export default function NestedMenuHandle({ name }: { name: string }) {
+export default function NestedMenuHandle(name:string) {
   switch (name) {
     case "color":
       console.log("color");

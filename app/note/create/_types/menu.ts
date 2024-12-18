@@ -42,21 +42,25 @@ export const menu_options:MenuSection[] = [
             { name: "header", description: "Add heading" },
             { name: "blockquote", description: "Toggle blockquote" },
             { name: "indent", description: "Adjust indentation" },
-            { name: "list", description: "Toggle list (ordered/bullet)" }
+            { name: "list", description: "Toggle list (ordered/bullet)" },
+            { name: "bullet", description: "Toggle bullet (ordered/bullet)" }
+
+            
+
         ]
     },
-    {
-        section: "Code & Special Formats",
-        options: [
-            { name: "code", description: "Toggle code format" },
-            { name: "code-block", description: "Toggle code block" },
-            { name: "formula", description: "Insert formula" }
-        ]
-    },
+    // {
+    //     section: "Code & Special Formats",
+    //     options: [
+    //         { name: "code", description: "Toggle code format" },
+    //         { name: "code-block", description: "Toggle code block" },
+    //         { name: "formula", description: "Insert formula" }
+    //     ]
+    // },
     {
         section: "Media",
         options: [
-            { name: "link", description: "Insert/edit link" },
+            // { name: "link", description: "Insert/edit link" },
             { name: "image", description: "Insert image" },
       
         ]
