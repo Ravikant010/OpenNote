@@ -1,7 +1,7 @@
 import Quill from "quill";
 import { formats } from "./config";
-import { AlignPosition } from "./types/editor";
-import { HeaderLevel, ListType } from "../text-editor-formatting";
+import { AlignPosition, HeaderLevel, ListType } from "./types/editor";
+
 
 // // Types and Interfaces
 // export interface QuillEditor extends Quill {

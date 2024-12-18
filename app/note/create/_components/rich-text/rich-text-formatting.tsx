@@ -2,9 +2,11 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { AlignLeft, AlignCenter, AlignRight, AlignJustify } from 'lucide-react';
 import CloseMenu from '../CloseMenu';
-import { TextFormatting, AlignPosition } from "./text-editor-formatting";
+
 import Quill from "quill";
 import { FormattingProps } from './types';
+import { TextFormatting } from './text-editor-formatting';
+import { AlignPosition } from './types/editor';
 
 // Shared button styles
 const baseButtonStyles = "rounded-md hover:bg-gray-200 dark:hover:bg-gray-800";
@@ -75,7 +77,7 @@ export function Alignment({ handleCloseComponent, quillRef }: FormattingProps) {
     value: AlignPosition;
     label: string;
   }> = [
-    { icon: AlignLeft, value: '', label: 'Align Left' },
+    { icon: AlignLeft, value: 'left', label: 'Align Left' },
     { icon: AlignCenter, value: 'center', label: 'Align Center' },
     { icon: AlignRight, value: 'right', label: 'Align Right' },
     { icon: AlignJustify, value: 'justify', label: 'Align Justify' }

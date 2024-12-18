@@ -40,6 +40,7 @@ export default function Page() {
   const handleSave = async () => {
     setIsValidating(true);
     try {
+      //@ts-ignore
       const content = quillRef?.root.innerHTML || "";
       const note: Note = {
         title,
