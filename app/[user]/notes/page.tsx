@@ -1,7 +1,8 @@
 "use client"
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react';
-import { Note } from "@/lib/schema/note";
+import { Note } from "@/components/NoteCard";
+import NoteList from '@/components/NoteCard';
 
 async function fetchUserNotes(user: string) {
   const response = await fetch(`/api/notes?user=${user}`);
@@ -25,12 +26,9 @@ export default function NotesPage() {
     <div>
       <h1>Notes for {user}</h1>
       <ul>
-        {notes.map((note: Note, key) => (
-          <li key={key}>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>
-          </li>
-        ))}
+
+          <NoteList notes={notes} />
+      
       </ul>
     </div>
   );

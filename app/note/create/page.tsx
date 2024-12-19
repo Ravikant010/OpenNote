@@ -27,7 +27,6 @@ import { saveNote } from "@/services/actions/saveNote";
 import { Note, noteSchema } from "@/lib/schema/note";
 import { getSession } from "@/lib/session";
 import { useRouter } from "next/navigation";
-
 export default function Page() {
   const quillRef = useRef<Quill | null>(null);
   const { toast } = useToast();
@@ -39,7 +38,6 @@ export default function Page() {
   function handleMenu() {
     setRichTextOptions(!ShowRichTextOptions);
   }
-
   const handleSave = async () => {
     setIsValidating(true);
     try {
@@ -51,14 +49,10 @@ export default function Page() {
         createdAt: new Date(),
         updatedAt: new Date(),
         isPublic: true,
-
         // Add the isPublic property
       };
-
       const validatedNote = noteSchema.parse(note);
-
       // Save the note to the database
-
       const response = await fetch("/api/save-note", {
         method: "POST",
         headers: {
@@ -66,20 +60,16 @@ export default function Page() {
         },
         body: JSON.stringify(validatedNote),
       });
-
       const data = await response.json();
       if (data.success) return router.push(`/${data?.data.username}/notes`);
-
       if (!response.ok || !data.success) {
         throw new Error(data.message || "Failed to save note");
       }
-
       toast({
         title: "Success",
         description: "Note saved successfully!",
         duration: 3000,
       });
-
       setShowSaveDialog(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -102,7 +92,6 @@ export default function Page() {
       setIsValidating(false);
     }
   };
-
   useEffect(() => {
     if (!quillRef.current && document.getElementById("editor")) {
       const quill = new Quill("#editor", {
@@ -115,7 +104,6 @@ export default function Page() {
       quillRef.current = quill;
     }
   }, []);
-
   return (
     <div className="relative h-dvh flex flex-col">
       <div className="flex w-full items-center p-2">
@@ -130,7 +118,6 @@ export default function Page() {
         <div>{new Date().toLocaleDateString()}</div>
         <div>{new Date().toLocaleTimeString()}</div>
       </div>
-
       <Card className="mx-2 bg-transparent border-none shadow-none">
         <CardContent className="p-0">
           <Input
@@ -142,7 +129,6 @@ export default function Page() {
           />
         </CardContent>
       </Card>
-
       <div
         className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
         id="editor"
@@ -182,7 +168,6 @@ export default function Page() {
           onClick={handleMenu}
         />
       </div>
-
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
         <DialogContent>
           <DialogHeader>
@@ -191,7 +176,6 @@ export default function Page() {
               Review your note before saving
             </DialogDescription>
           </DialogHeader>
-
           <div className="grid gap-4 py-4">
             {!title && (
               <div className="grid gap-2">
@@ -208,11 +192,9 @@ export default function Page() {
               <Label>Content Preview</Label>
               <div 
                 className="max-h-[200px] overflow-auto p-2 border rounded-md " id  = "editor"
-             
               />
             </div> */}
           </div>
-
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
               Cancel
@@ -223,7 +205,6 @@ export default function Page() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       <Toaster />
     </div>
   );
