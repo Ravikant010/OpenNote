@@ -1,7 +1,6 @@
-
 "use client";
-import hljs from 'highlight.js'; // Import highlight.js library
-import 'highlight.js/styles/github.css'; // Import a syntax highlighting style (can choose another one)
+import hljs from "highlight.js"; // Import highlight.js library
+import "highlight.js/styles/github.css"; // Import a syntax highlighting style (can choose another one)
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -10,20 +9,24 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import RichTextMenu from "./_components/rich-text";
 import Quill from "quill";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-
-const noteSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  content: z.string().min(1, "Content is required"),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
-
-type Note = z.infer<typeof noteSchema>;
+import { db } from "@/db/db"; // Import the database instance
+import { notes } from "@/db/schema"; // Import the notes schema
+import { saveNote } from "@/services/actions/saveNote";
+import { Note, noteSchema } from "@/lib/schema/note";
+import { getSession } from "@/lib/session";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const quillRef = useRef<Quill | null>(null);
@@ -32,7 +35,7 @@ export default function Page() {
   const [title, setTitle] = useState("");
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
-
+  const router = useRouter();
   function handleMenu() {
     setRichTextOptions(!ShowRichTextOptions);
   }
@@ -41,25 +44,42 @@ export default function Page() {
     setIsValidating(true);
     try {
       //@ts-ignore
-      const content = quillRef?.root.innerHTML || "";
+      const content = quillRef?.current?.root.innerHTML || "";
       const note: Note = {
         title,
         content,
         createdAt: new Date(),
         updatedAt: new Date(),
+        isPublic: true,
+
+        // Add the isPublic property
       };
 
       const validatedNote = noteSchema.parse(note);
-      
-      // TODO: Implement your save logic here
-      console.log("Saving note:", validatedNote);
-      
+
+      // Save the note to the database
+
+      const response = await fetch("/api/save-note", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(validatedNote),
+      });
+
+      const data = await response.json();
+      if (data.success) return router.push(`/${data?.data.username}/notes`);
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to save note");
+      }
+
       toast({
         title: "Success",
         description: "Note saved successfully!",
         duration: 3000,
       });
-      
+
       setShowSaveDialog(false);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -84,11 +104,14 @@ export default function Page() {
   };
 
   useEffect(() => {
-    if (!quillRef.current  && document.getElementById("editor")) {
-      const quill = new Quill("#editor",  { theme: "bubble", modules:{
-        toolbar: [],
-      }},);
-      quill.editor.delta
+    if (!quillRef.current && document.getElementById("editor")) {
+      const quill = new Quill("#editor", {
+        theme: "bubble",
+        modules: {
+          toolbar: [],
+        },
+      });
+      quill.editor.delta;
       quillRef.current = quill;
     }
   }, []);
@@ -98,10 +121,7 @@ export default function Page() {
       <div className="flex w-full items-center p-2">
         <Button variant={"ghost"}>Cancel</Button>
         <div className="flex-1 text-center">Notes</div>
-        <Button 
-          variant={"ghost"}
-          onClick={() => setShowSaveDialog(true)}
-        >
+        <Button variant={"ghost"} onClick={() => setShowSaveDialog(true)}>
           Save
         </Button>
       </div>
@@ -122,7 +142,7 @@ export default function Page() {
           />
         </CardContent>
       </Card>
-     
+
       <div
         className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
         id="editor"
@@ -139,12 +159,9 @@ export default function Page() {
           ${ShowRichTextOptions ? "translate-y-0" : "translate-y-full"}
         `}
       >
-       {ShowRichTextOptions && (
-        <RichTextMenu 
-          quillRef={quillRef} 
-          handleMenu={handleMenu}
-        />
-      )}
+        {ShowRichTextOptions && (
+          <RichTextMenu quillRef={quillRef} handleMenu={handleMenu} />
+        )}
       </div>
       {/* Chevron Button - Fixed Positioning */}
       <div
@@ -174,37 +191,33 @@ export default function Page() {
               Review your note before saving
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter note title"
-              />
-            </div>
-            <div className="grid gap-2">
+            {!title && (
+              <div className="grid gap-2">
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Enter note title"
+                />
+              </div>
+            )}
+            {/* <div className="grid gap-2">
               <Label>Content Preview</Label>
               <div 
                 className="max-h-[200px] overflow-auto p-2 border rounded-md " id  = "editor"
              
               />
-            </div>
+            </div> */}
           </div>
 
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowSaveDialog(false)}
-            >
+            <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleSave}
-              disabled={isValidating}
-            >
+            <Button onClick={handleSave} disabled={isValidating}>
               {isValidating ? "Saving..." : "Save Note"}
             </Button>
           </DialogFooter>

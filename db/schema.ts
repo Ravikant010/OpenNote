@@ -30,6 +30,8 @@ export const notes = pgTable('notes', {
   userNotesIdx: uniqueIndex('user_notes_idx').on(table.userId, table.createdAt)
 }));
 
+
+
 export const likes = pgTable('likes', {
   id: serial('id').primaryKey(),
   noteId: integer('note_id').notNull().references(() => notes.id),
@@ -90,3 +92,7 @@ export const commentRelations = relations(comments, ({ one }) => ({
 
 export type NewUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
+
+export type Note = typeof notes.$inferSelect;
+export type Comment = typeof comments.$inferSelect;
+export type Like = typeof likes.$inferSelect;
