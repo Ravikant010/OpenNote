@@ -31,11 +31,14 @@ fetch('/api/delete-account', {
   return (
     <div className="container mx-auto p-6 bg-white dark:bg-transparent">
       <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Settings</h1>
-      <div className="mb-6">
+      <div className="mb-6 lg:hidden">
         <label htmlFor="theme" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Theme:
         </label>
-        <ModeToggle />
+        {/* Hide on small devices, show on large devices */}
+        <div className="hidden lg:block">
+          <ModeToggle />
+        </div>
       </div>
       <div>
         <Button

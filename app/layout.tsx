@@ -14,7 +14,7 @@ import ThemeProvider  from "@/components/ThemeProvider";
 //   variable: "--font-geist-mono",
 //   subsets: ["latin"],
 // });
-
+import { Analytics } from '@vercel/analytics/next';
 export const metadata: Metadata = {
   title: "open-note",
   description: "write your note",
@@ -34,7 +34,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
         </ThemeProvider>
-
+        <Analytics />
       </body>
     </html>
   );

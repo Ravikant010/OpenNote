@@ -25,7 +25,7 @@ type Props = {
 export default function NoteCard({ notes, onDelete }: Props) {
   const [expandedNotes, setExpandedNotes] = useState<Set<number>>(new Set());
   const router = useRouter();
-
+const [username, setUsername] = useState<string | null>(null);
   const toggleExpand = (id: number) => {
     setExpandedNotes(prev => {
       const newSet = new Set(prev);
@@ -60,6 +60,7 @@ export default function NoteCard({ notes, onDelete }: Props) {
   const handleCardClick = async (noteId: number) => {
     try {
       const username = await fetchUserByNoteId(noteId);
+      setUsername(username);
       router.push(`/${username}/note/${noteId}`);
     } catch (error) {
       console.error(error);
@@ -79,9 +80,10 @@ export default function NoteCard({ notes, onDelete }: Props) {
                 ) : (
                   <EyeOff className="h-5 w-5 text-red-500" />
                 )}
-                <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(note.id); }}>
+               {username && <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(note.id); }}>
                   <Trash className="h-5 w-5 text-red-500" />
                 </Button>
+}
               </div>
             </CardTitle>
           </CardHeader>
