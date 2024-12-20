@@ -17,7 +17,8 @@ export async function POST(req: Request) {
     noteData.updatedAt = new Date(noteData.updatedAt);
     console.log(noteData)
     const newNote = await saveNote(noteData, session.userId);
-    const user = await get_user(newNote.userId);
+    const user = await get_user();
+    console.log(user)
   return new Response(JSON.stringify({ success: true, data: {...newNote, ...user} }))
   //  return NextResponse.redirect(`/${user?.username}/notes`);
   } catch (error) {

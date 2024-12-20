@@ -33,6 +33,7 @@ export default function Page() {
   const [ShowRichTextOptions, setRichTextOptions] = useState(false);
   const [title, setTitle] = useState("");
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const router = useRouter();
   function handleMenu() {
@@ -92,6 +93,14 @@ export default function Page() {
       setIsValidating(false);
     }
   };
+  const handleCancel = () => {
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmCancel = () => {
+    setShowConfirmDialog(false);
+    router.push('/');
+  };
   useEffect(() => {
     if (!quillRef.current && document.getElementById("editor")) {
       const quill = new Quill("#editor", {
@@ -107,7 +116,7 @@ export default function Page() {
   return (
     <div className="relative h-dvh flex flex-col">
       <div className="flex w-full items-center p-2">
-        <Button variant={"ghost"}>Cancel</Button>
+        <Button variant={"ghost"} onClick={handleCancel}>Cancel</Button>
         <div className="flex-1 text-center">Notes</div>
         <Button variant={"ghost"} onClick={() => setShowSaveDialog(true)}>
           Save
@@ -188,19 +197,31 @@ export default function Page() {
                 />
               </div>
             )}
-            {/* <div className="grid gap-2">
-              <Label>Content Preview</Label>
-              <div 
-                className="max-h-[200px] overflow-auto p-2 border rounded-md " id  = "editor"
-              />
-            </div> */}
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
+            <Button variant="outline" onClick={handleCancel}>
               Cancel
             </Button>
             <Button onClick={handleSave} disabled={isValidating}>
               {isValidating ? "Saving..." : "Save Note"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Cancel</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to cancel? Any unsaved changes will be lost.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowConfirmDialog(false)}>
+              No
+            </Button>
+            <Button onClick={handleConfirmCancel}>
+              Yes, Cancel
             </Button>
           </DialogFooter>
         </DialogContent>
