@@ -62,6 +62,7 @@ export const config = {
     '/profile/:path*',
     '/settings/:path*',
     '/api/:path*',
+   
     '/:username/note/:noteId'
   ]
 };

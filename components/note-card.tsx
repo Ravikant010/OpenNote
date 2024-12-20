@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "./ui/button";
@@ -60,13 +60,23 @@ const [username, setUsername] = useState<string | null>(null);
   const handleCardClick = async (noteId: number) => {
     try {
       const username = await fetchUserByNoteId(noteId);
-      setUsername(username);
+  
       router.push(`/${username}/note/${noteId}`);
     } catch (error) {
       console.error(error);
     }
   };
-
+useEffect(()=>{
+ async function getUser(){
+    const response = await fetch('/api/get-user');
+    const {user} = await response.json();
+    if(user)
+    setUsername(user.username);
+  else
+  setUsername(null);
+  }
+  getUser();
+}, []);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
       {notes.map(note => (
