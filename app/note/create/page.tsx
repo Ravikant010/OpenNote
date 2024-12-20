@@ -1,7 +1,7 @@
 "use client";
 import hljs from "highlight.js"; // Import highlight.js library
 import "highlight.js/styles/github.css"; // Import a syntax highlighting style (can choose another one)
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CircleChevronUp } from "lucide-react";
@@ -21,36 +21,9 @@ import { Label } from "@/components/ui/label";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
-import { db } from "@/db/db"; // Import the database instance
-import { notes } from "@/db/schema"; // Import the notes schema
-import { saveNote } from "@/services/actions/saveNote";
-import { Note, noteSchema } from "@/lib/schema/note";
-import { getSession } from "@/lib/session";
 import { useRouter } from "next/navigation";
-export default function Page() {
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('/api/getUserId');
-        if (response.status === 401) {
-          router.push('/login');
-          return;
-        }
-        const data = await response.json();
-        const userId = data.userId;
-        if (!userId) {
-          router.push('/login');
-          return;
-        }
-  
-      } catch (error) {
-        console.error("Failed to fetch user data", error);
-      }
-    };
 
-    fetchUserData();
-  }, []);
-
+export default function CreateNotePage() {
   const quillRef = useRef<Quill | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
   const { toast } = useToast();
@@ -60,24 +33,30 @@ export default function Page() {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
   const router = useRouter();
+
   function handleMenu() {
     setRichTextOptions(!ShowRichTextOptions);
   }
+
   const handleSave = async () => {
     setIsValidating(true);
     try {
       //@ts-ignore
       const content = quillRef?.current?.root.innerHTML || "";
-      const note: Note = {
+      const note = {
         title,
         content,
         createdAt: new Date(),
         updatedAt: new Date(),
         isPublic: true,
-        // Add the isPublic property
       };
-      const validatedNote = noteSchema.parse(note);
-      // Save the note to the database
+      const validatedNote = z.object({
+        title: z.string().min(1),
+        content: z.string().min(1),
+        createdAt: z.date(),
+        updatedAt: z.date(),
+        isPublic: z.boolean(),
+      }).parse(note);
       const response = await fetch("/api/save-note", {
         method: "POST",
         headers: {
@@ -117,6 +96,7 @@ export default function Page() {
       setIsValidating(false);
     }
   };
+
   const handleCancel = () => {
     setShowConfirmDialog(true);
   };
@@ -125,6 +105,7 @@ export default function Page() {
     setShowConfirmDialog(false);
     router.push('/');
   };
+
   useEffect(() => {
     if (!quillRef.current && editorRef.current) {
       const quill = new Quill(editorRef.current, {
@@ -137,6 +118,7 @@ export default function Page() {
       quillRef.current = quill;
     }
   }, []);
+
   return (
     <div className="relative h-dvh flex flex-col">
       <div className="flex w-full items-center p-2">
@@ -165,7 +147,7 @@ export default function Page() {
       <div
         className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
         id="editor"
-        ref = {editorRef}
+        ref={editorRef}
       ></div>
       {/* Rich Text Options - Fixed Positioning */}
       <div
