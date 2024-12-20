@@ -1,3 +1,4 @@
+"use server";
 import { getSession } from "@/lib/session";
 import { db } from "@/db/db";
 import { notes, users } from "@/db/schema";
