@@ -1,4 +1,4 @@
-import { FormatType } from '../text-editor-formatting';
+import { FormatType } from "../rich-text/types/editor"
 
 export type MenuOption = {
   name: string;

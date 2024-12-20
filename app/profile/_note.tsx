@@ -71,18 +71,19 @@ export default function ProfilePage({ notes: _notes, user }: ProfilePageProps) {
               <p className="text-gray-500">{user.email}</p>
               <p className="text-gray-500">Total Notes: {notes.length}</p>
             </div>
-            <Button
+            {/* <Button
               variant="outline"
               onClick={() => redirect('/edit-profile')}
               className="mt-4"
             >
               Edit Profile
-            </Button>
+            </Button> */}
           </div>
         </CardContent>
       </Card>
       <h2 className="text-2xl font-bold mb-4">Your Notes</h2>
-      <NoteCard notes={notes} onDelete={handleDelete} username={user.username} />
+      
+      <NoteCard notes={notes} onDelete={handleDelete}  />
     </div>
   );
 }

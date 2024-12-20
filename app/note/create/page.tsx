@@ -28,7 +28,31 @@ import { Note, noteSchema } from "@/lib/schema/note";
 import { getSession } from "@/lib/session";
 import { useRouter } from "next/navigation";
 export default function Page() {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/getUserId');
+        if (response.status === 401) {
+          router.push('/login');
+          return;
+        }
+        const data = await response.json();
+        const userId = data.userId;
+        if (!userId) {
+          router.push('/login');
+          return;
+        }
+  
+      } catch (error) {
+        console.error("Failed to fetch user data", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const quillRef = useRef<Quill | null>(null);
+  const editorRef = useRef<HTMLDivElement | null>(null);
   const { toast } = useToast();
   const [ShowRichTextOptions, setRichTextOptions] = useState(false);
   const [title, setTitle] = useState("");
@@ -102,8 +126,8 @@ export default function Page() {
     router.push('/');
   };
   useEffect(() => {
-    if (!quillRef.current && document.getElementById("editor")) {
-      const quill = new Quill("#editor", {
+    if (!quillRef.current && editorRef.current) {
+      const quill = new Quill(editorRef.current, {
         theme: "bubble",
         modules: {
           toolbar: [],
@@ -141,6 +165,7 @@ export default function Page() {
       <div
         className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
         id="editor"
+        ref = {editorRef}
       ></div>
       {/* Rich Text Options - Fixed Positioning */}
       <div

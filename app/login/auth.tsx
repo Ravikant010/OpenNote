@@ -3,7 +3,7 @@
 // Import Firebase SDK
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth, firebaseConfig } from "@/firebase-config"; // Assuming your firebaseConfig is exported from a file named firebase-config.js
+import { auth, firebaseConfig } from "@/firebase-config"; 
 import { Button } from "@/components/ui/button";
 import { signup } from "@/services/actions/auth-actions";
 import { User } from "@/types/types";

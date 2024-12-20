@@ -11,11 +11,13 @@ async function fetchAllNotes() {
     throw new Error('Failed to fetch all notes');
   }
   const { notes } = await response.json();
+  if(!notes) return [];
   return notes;
 }
 
 export default function Home() {
   const [isShowMenu, setShowMenu] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [notes, setNotes] = useState<Note[]>([]);
   const { toast } = useToast();
 
@@ -23,8 +25,9 @@ export default function Home() {
     setShowMenu(!isShowMenu);
   }
 
+  const handleLoadeer = () => {    setLoader(false);  }
   useEffect(() => {
-    fetchAllNotes().then(setNotes).catch(error => {
+    fetchAllNotes().then(setNotes).then(handleLoadeer).catch(error => {
       console.error(error);
       toast({
         title: "Error",
@@ -33,6 +36,7 @@ export default function Home() {
         duration: 3000,
       });
     });
+
   }, []);
 
   const handleDelete = async (noteId: number) => {
@@ -55,6 +59,7 @@ export default function Home() {
       });
     }
   };
+  if(loader) return <div>Loading...</div>
 
   return (
     <div className=" ">
@@ -62,7 +67,7 @@ export default function Home() {
       <Header toggleMenu={toggleMenu} isShowMenu={isShowMenu} />
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">All Notes</h1>
-        <NoteCard notes={notes} onDelete={handleDelete}  />
+       {notes.length ?  <NoteCard notes={notes} onDelete={handleDelete}  /> : <div className="text-center">No notes found</div>}
       </div>
     </div>
   );

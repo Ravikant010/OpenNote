@@ -24,10 +24,8 @@ export default async function Profile() {
 if(data?.length)
   return (
     <div>
-        
-    {/* {/* //   <ProfilePage notes={notes} user={user} /> */}
-
-       <ProfilePage  notes = {[...data]}  user={user}/> 
+        {/* @ts-ignore */}
+        <ProfilePage notes={[...data]} user={user} />
     </div>
   );
 

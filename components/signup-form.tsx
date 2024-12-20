@@ -8,13 +8,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { usernameSchema, passwordSchema } from '@/models/index'
 import Auth from '@/app/login/auth'
 import { signup } from '@/services/actions/auth-actions'
+import { useRouter } from 'next/navigation'
 
 export default function SignupForm() {
   const [step, setStep] = useState<1 | 2>(1)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
-
+  const router = useRouter()
   useEffect(() => {
     // Ensure client-side only code runs here
   }, [])
@@ -40,6 +41,8 @@ export default function SignupForm() {
     try {
       await passwordSchema.parseAsync({ password })
       await signup({ email, password, providerId: "open-note" })
+    
+      router.push('/')
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message)
@@ -82,7 +85,7 @@ export default function SignupForm() {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full transition-colors duration-300 hover:bg-gray-700 hover:text-white rounded-lg">
+              <Button type="submit" className="w-full transition-colors duration-300 hover:bg-[#151617] hover:text-white rounded-lg">
                 Next
               </Button>
             </form>

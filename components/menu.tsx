@@ -8,7 +8,7 @@ const menu_options = [
   { name: "Profile", href: "/profile" },    // User profile
   { name: "New Note", href: "/note/create" },   // Create a new note
   { name: "Setting", href: "/setting" },   // Application settings
-  { name: "Help", href: "/help" },       // Help and support
+  // { name: "Help", href: "/help" },       // Help and support
   { name: "Logout", href: "/logout" }      // Logout from the application
 ];
 
