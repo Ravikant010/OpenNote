@@ -27,13 +27,10 @@ const COLORS = [
 
 // Font configuration
 const FONTS = [
-  { value: "arial", name: "Arial" },
-  { value: "helvetica", name: "Helvetica" },
-  { value: "times-new-roman", name: "Times New Roman" },
-  { value: "garamond", name: "Garamond" },
-  { value: "georgia", name: "Georgia" },
-  { value: "courier-new", name: "Courier New" },
-  { value: "verdana", name: "Verdana" }
+  { value: "serif", name: "Serif" },
+  { value: "", name: "Sans-Serif" },
+  { value: "monospace", name: "Monospace" },
+
 ];
 
 // Size configuration
