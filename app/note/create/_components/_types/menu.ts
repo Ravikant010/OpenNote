@@ -44,9 +44,9 @@ export const menu_options: MenuSection[] = [
   {
     section: 'Insert',
     options: [
-      { name: 'link', label: 'Link', formatType: 'link' },
+      // { name: 'link', label: 'Link', formatType: 'link' },
       // { name: 'image', label: 'Image', formatType: 'image' },
-      { name: 'formula', label: 'Formula', formatType: 'formula' },
+      // { name: 'formula', label: 'Formula', formatType: 'formula' },
       { name: 'code-block', label: 'Code Block', formatType: 'code-block' },
     ]
   }
