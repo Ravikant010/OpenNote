@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { getAllNotes, getNotes } from "@/services/actions/notes";
-import ProfilePage from "./_note";
+import ProfilePage from "./_note/_note";
 import { get_user } from "@/services/actions/user-action";
 import Link from "next/link";
 
