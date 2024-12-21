@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import "quill/dist/quill.snow.css";
+import Quill from "quill";
 
 // Dynamic import for Quill
 // const Quill = dynamic(
@@ -26,16 +27,20 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
 
   useEffect(() => {
     const initQuill = async () => {
-      if (mounted && editorRef.current && !quillRef.current) {
+      if (mounted && editorRef.current) {
         try {
-          const QuillModule = await import('quill');
-          if(QuillModule.default != undefined) {
-          const quill = new QuillModule.default(editorRef.current, {
-         
+          quillRef.current = new Quill(editorRef.current ,{
             placeholder: 'Write something...',
-          });
-          quillRef.current = quill;
-        }} catch (error) {
+          })
+          // const QuillModule = await import('quill');
+          // if(QuillModule.default != undefined) {
+          // const quill = new QuillModule.default(editorRef.current, {
+         
+          //   placeholder: 'Write something...',
+          // });
+          // quillRef.current = quill;
+    
+        } catch (error) {
           console.error('Failed to initialize Quill:', error);
         }
       }
@@ -58,7 +63,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
     <div
       className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
       id="editor"
-      ref={editorRef}
+    ref = {editorRef}
     ></div>
   );
 };
