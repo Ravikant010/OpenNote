@@ -43,7 +43,7 @@ export default function NoteDetailsPage() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{note.title}</h1>
-      <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: note.content }} />
+      <div className="prose max-w-none h-fit" dangerouslySetInnerHTML={{ __html: note.content }} />
       <div className="text-sm text-gray-500 mt-4">
         <p>Created at: {new Date(note.createdAt).toLocaleString()}</p>
         <p>Updated at: {new Date(note.updatedAt).toLocaleString()}</p>

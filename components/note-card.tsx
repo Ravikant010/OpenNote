@@ -102,7 +102,7 @@ useEffect(()=>{
               className={`prose max-w-none ${expandedNotes.has(note.id) ? '' : 'line-clamp-3'}`}
               dangerouslySetInnerHTML={{ __html: note.content }}
             />
-            {note.content.length > 100 && (
+            {/* {note.content.length > 100 && (
               <Button 
                 variant="link" 
                 onClick={(e) => { e.stopPropagation(); toggleExpand(note.id); }}
@@ -110,7 +110,7 @@ useEffect(()=>{
               >
                 {expandedNotes.has(note.id) ? 'Show less' : 'Show more'}
               </Button>
-            )}
+            )} */}
           </CardContent>
           <CardFooter className="flex flex-col items-start space-y-2">
             <div className="flex items-center space-x-2 text-sm text-gray-500">
