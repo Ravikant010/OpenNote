@@ -55,7 +55,7 @@ export default function ProfilePage({ notes: _notes, user }: ProfilePageProps) {
 
   return (
     <div className="container mx-auto p-4">
-      <Card className="max-w-2xl mx-auto mb-8">
+      <Card className="w-full mb-8">
         <CardHeader>
           <CardTitle className="text-3xl font-bold mb-4">Profile</CardTitle>
         </CardHeader>

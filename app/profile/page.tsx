@@ -15,8 +15,7 @@ import Link from "next/link";
 
 export default async function Profile() {
     const user  = await get_user();
-  if(!user)
-    redirect('/login');
+
   const {data} = await getAllNotes();
   console.log(data)
 

@@ -154,6 +154,8 @@ export default function CreateNotePage() {
           right-0 
           transition-transform 
           duration-300 
+          lg:top-0
+          lg:absolute
           ${ShowRichTextOptions ? "translate-y-0" : "translate-y-full"}
         `}
       >
