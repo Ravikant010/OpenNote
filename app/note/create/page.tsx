@@ -23,19 +23,20 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-const Quill = dynamic(
-  async () => {
-    const { default: QuillModule } = await import('quill');
-    return QuillModule;
-  },
-  { 
-    ssr: false,
-    loading: () => <div>Loading editor...</div>
-  }
-);
+import Quill from "quill";
+// const Quill = dynamic(
+//   async () => {
+//     const { default: QuillModule } = await import('quill');
+//     return QuillModule;
+//   },
+//   { 
+//     ssr: false,
+//     loading: () => <div>Loading editor...</div>
+//   }
+// );
 
 export default function CreateNotePage() {
-  const quillRef = useRef<typeof Quill | null>(null);
+  const quillRef = useRef<Quill | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
   const { toast } = useToast();
   const [ShowRichTextOptions, setRichTextOptions] = useState(false);
