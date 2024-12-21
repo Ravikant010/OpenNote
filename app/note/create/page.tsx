@@ -124,8 +124,10 @@ export default function CreateNotePage() {
     const initQuill = async () => {
       if (mounted && editorRef.current && !quillRef.current) {
         try {
-          const QuillConstructor = await import('quill');
-          const quill = new QuillConstructor.default(editorRef.current);
+          const QuillConstructor = await import('quill', );
+          const quill = new QuillConstructor.default(editorRef.current, {
+            placeholder: "Start writing...",
+          });
           quillRef.current = quill;
         } catch (error) {
           console.error('Failed to initialize Quill:', error);
@@ -224,8 +226,10 @@ export default function CreateNotePage() {
                 <Input
                   id="title"
                   value={title}
+      
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Enter note title"
+                  placeholder="Enter note title "
+                  className="text-3xl"
                 />
               </div>
             )}
