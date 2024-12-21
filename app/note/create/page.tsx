@@ -7,7 +7,7 @@ import { CircleChevronUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import RichTextMenu from "./_components/rich-text";
-import "quill/dist/quill.snow.css";
+// import {QuillEditor} from "@/components/QuillEditor";
 import {
   Dialog,
   DialogContent,
@@ -21,21 +21,32 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 import QuillEditor from "./_components/QuillEditor";
-
 
 export default function CreateNotePage() {
   const quillRef = useRef<any>(null);
-  const editorRef = useRef<HTMLDivElement | null>(null);
   const { toast } = useToast();
   const [ShowRichTextOptions, setRichTextOptions] = useState(false);
   const [title, setTitle] = useState("");
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      setCurrentDate(now.toLocaleDateString());
+      setCurrentTime(now.toLocaleTimeString());
+    };
+
+    updateDateTime();
+    const intervalId = setInterval(updateDateTime, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   function handleMenu() {
     setRichTextOptions(!ShowRichTextOptions);
@@ -108,7 +119,6 @@ export default function CreateNotePage() {
     router.push('/');
   };
 
-
   return (
     <div className="relative h-dvh flex flex-col">
       <div className="flex w-full items-center p-2">
@@ -120,8 +130,8 @@ export default function CreateNotePage() {
       </div>
       <Separator />
       <div className="text-sm text-gray-500 flex justify-between p-2">
-        <div>{new Date().toLocaleDateString()}</div>
-        <div>{new Date().toLocaleTimeString()}</div>
+        <div>{currentDate}</div>
+        <div>{currentTime}</div>
       </div>
       <Card className="mx-2 bg-transparent border-none shadow-none">
         <CardContent className="p-0">
@@ -135,11 +145,6 @@ export default function CreateNotePage() {
         </CardContent>
       </Card>
       <QuillEditor quillRef={quillRef} />
-      {/* <div
-        className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
-        id="editor"
-        ref={editorRef}
-      ></div> */}
       {/* Rich Text Options - Fixed Positioning */}
       <div
         className={`

@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import "quill/dist/quill.snow.css";
-import Quill from "quill";
+// Dynamic import for Quill
+
 
 // Dynamic import for Quill
 // const Quill = dynamic(
@@ -27,19 +28,14 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
 
   useEffect(() => {
     const initQuill = async () => {
-      if (mounted && editorRef.current) {
+      if (mounted && editorRef.current && !quillRef.current) {
         try {
-          quillRef.current = new Quill(editorRef.current ,{
+          const { default: Quill } = await import('quill');
+          const quill = new Quill(editorRef.current, {
+          
             placeholder: 'Write something...',
-          })
-          // const QuillModule = await import('quill');
-          // if(QuillModule.default != undefined) {
-          // const quill = new QuillModule.default(editorRef.current, {
-         
-          //   placeholder: 'Write something...',
-          // });
-          // quillRef.current = quill;
-    
+          });
+          quillRef.current = quill;
         } catch (error) {
           console.error('Failed to initialize Quill:', error);
         }
