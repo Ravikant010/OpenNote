@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import RichTextMenu from "./_components/rich-text";
 import "quill/dist/quill.snow.css";
-// import Quill from "quill";
 import {
   Dialog,
   DialogContent,
@@ -23,20 +22,21 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import Quill from "quill";
-// const Quill = dynamic(
-//   async () => {
-//     const { default: QuillModule } = await import('quill');
-//     return QuillModule;
-//   },
-//   { 
-//     ssr: false,
-//     loading: () => <div>Loading editor...</div>
-//   }
-// );
+
+// Dynamic import for Quill
+const Quill = dynamic(
+  async () => {
+    const { default: QuillModule } = await import('quill');
+    return QuillModule;
+  },
+  { 
+    ssr: false,
+    loading: () => <div>Loading editor...</div>
+  }
+);
 
 export default function CreateNotePage() {
-  const quillRef = useRef<Quill | null>(null);
+  const quillRef = useRef<any>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
   const { toast } = useToast();
   const [ShowRichTextOptions, setRichTextOptions] = useState(false);
@@ -46,8 +46,6 @@ export default function CreateNotePage() {
   const [isValidating, setIsValidating] = useState(false);
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  // ...existing refs and state...
-
 
   function handleMenu() {
     setRichTextOptions(!ShowRichTextOptions);
@@ -56,7 +54,6 @@ export default function CreateNotePage() {
   const handleSave = async () => {
     setIsValidating(true);
     try {
-      //@ts-ignore
       const content = quillRef?.current?.root.innerHTML || "";
       const note = {
         title,
@@ -120,18 +117,15 @@ export default function CreateNotePage() {
     setShowConfirmDialog(false);
     router.push('/');
   };
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+
   useEffect(() => {
     const initQuill = async () => {
       if (mounted && editorRef.current && !quillRef.current) {
         try {
           const QuillConstructor = await import('quill');
           const quill = new QuillConstructor.default(editorRef.current, {
-          
-            placeholder: 'Write something...',
            
+            placeholder: 'Write something...',
           });
           quillRef.current = quill;
         } catch (error) {
@@ -143,22 +137,15 @@ export default function CreateNotePage() {
     if (mounted) {
       initQuill();
     }
-
-    return () => {
-      // Cleanup on unmount
-      if (quillRef.current) {
-        // quillRef.current.off?.(); // Remove event listeners if any
-        quillRef.current = null;
-      }
-    };
   }, [mounted]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return <div>Loading editor...</div>;
   }
-
-
-
 
   return (
     <div className="relative h-dvh flex flex-col">
@@ -240,10 +227,8 @@ export default function CreateNotePage() {
                 <Input
                   id="title"
                   value={title}
-      
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Enter note title "
-                  className="text-3xl"
+                  placeholder="Enter note title"
                 />
               </div>
             )}
@@ -280,14 +265,3 @@ export default function CreateNotePage() {
     </div>
   );
 }
-
-
-// import React from 'react'
-
-// type Props = {}
-
-// export default function page({}: Props) {
-//   return (
-//     <div>page</div>
-//   )
-// }
