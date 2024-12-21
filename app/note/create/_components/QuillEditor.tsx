@@ -16,12 +16,14 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
     const initQuill = async () => {
       if (mounted && editorRef.current && !quillRef.current) {
         try {
-          const Quill = (await import('quill')).default;
-          const quill = new Quill(editorRef.current, {
+          const Quill = (await import('quill'));
+          if(Quill){
+          const quill = new Quill.default(editorRef.current, {
          
             placeholder: 'Write something...',
           });
           quillRef.current = quill;
+        }
         } catch (error) {
           console.error('Failed to initialize Quill:', error);
         }
