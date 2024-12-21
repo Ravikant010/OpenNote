@@ -22,18 +22,19 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import Quill from "quill";
 
 // Dynamic import for Quill
-const Quill = dynamic(
-  async () => {
-    const { default: QuillModule } = await import('quill');
-    return QuillModule;
-  },
-  { 
-    ssr: false,
-    loading: () => <div>Loading editor...</div>
-  }
-);
+// const Quill = dynamic(
+//   async () => {
+//     const { default: QuillModule } = await import('quill');
+//     return QuillModule;
+//   },
+//   { 
+//     ssr: false,
+//     loading: () => <div>Loading editor...</div>
+//   }
+// );
 
 export default function CreateNotePage() {
   const quillRef = useRef<any>(null);
@@ -122,11 +123,14 @@ export default function CreateNotePage() {
     const initQuill = async () => {
       if (mounted && editorRef.current && !quillRef.current) {
         try {
-          const QuillConstructor = await import('quill');
-          const quill = new QuillConstructor.default(editorRef.current, {
-           
-            placeholder: 'Write something...',
+          const quill =  new Quill(editorRef.current, {
+            placeholder: "Write something...",
           });
+          // const QuillConstructor = await import('quill');
+          // const quill = new QuillConstructor(editorRef.current, {
+           
+          //   placeholder: 'Write something...',
+          // });
           quillRef.current = quill;
         } catch (error) {
           console.error('Failed to initialize Quill:', error);
