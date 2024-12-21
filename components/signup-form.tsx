@@ -74,7 +74,7 @@ export default function SignupForm() {
           {step === 1 ? (
             <form onSubmit={handleUsernameSubmit} className="mt-6 space-y-6">
               <div>
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">Email</Label>
                 <Input
                   id="username"
                   type="text"
