@@ -24,17 +24,6 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import QuillEditor from "./_components/QuillEditor";
 
-// Dynamic import for Quill
-const Quill = dynamic(
-  async () => {
-    const { Quill } = await import('quill');
-    return Quill;
-  },
-  { 
-    ssr: false,
-    loading: () => <div>Loading editor...</div>
-  }
-);
 
 export default function CreateNotePage() {
   const quillRef = useRef<any>(null);
@@ -119,34 +108,6 @@ export default function CreateNotePage() {
     router.push('/');
   };
 
-  // useEffect(() => {
-  //   const initQuill = async () => {
-  //     if (mounted && editorRef.current && !quillRef.current) {
-  //       try {
-  //         const QuillConstructor = await import('quill');
-  //         const quill = new QuillConstructor.default(editorRef.current, {
-           
-  //           placeholder: 'Write something...',
-  //         });
-  //         quillRef.current = quill;
-  //       } catch (error) {
-  //         console.error('Failed to initialize Quill:', error);
-  //       }
-  //     }
-  //   };
-
-  //   if (mounted) {
-  //     initQuill();
-  //   }
-  // }, [mounted]);
-
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
-
-  // if (!mounted) {
-  //   return <div>Loading editor...</div>;
-  // }
 
   return (
     <div className="relative h-dvh flex flex-col">

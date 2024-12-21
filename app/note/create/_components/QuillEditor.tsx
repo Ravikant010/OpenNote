@@ -5,16 +5,16 @@ import dynamic from "next/dynamic";
 import "quill/dist/quill.snow.css";
 
 // Dynamic import for Quill
-const Quill = dynamic(
-  async () => {
-    const { default: Quill } = await import('quill');
-    return ({ forwardedRef, ...props }: any) => <div ref={forwardedRef} {...props} />;
-  },
-  { 
-    ssr: false,
-    loading: () => <div>Loading editor...</div>
-  }
-);
+// const Quill = dynamic(
+//   async () => {
+//     const { default: Quill } = await import('quill');
+//     return ({ forwardedRef, ...props }: any) => <div ref={forwardedRef} {...props} />;
+//   },
+//   { 
+//     ssr: false,
+//     loading: () => <div>Loading editor...</div>
+//   }
+// );
 
 interface QuillEditorProps {
   quillRef: React.MutableRefObject<any>;
