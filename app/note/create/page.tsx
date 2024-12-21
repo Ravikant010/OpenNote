@@ -120,15 +120,18 @@ export default function CreateNotePage() {
     setShowConfirmDialog(false);
     router.push('/');
   };
-
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const initQuill = async () => {
       if (mounted && editorRef.current && !quillRef.current) {
         try {
           const QuillConstructor = await import('quill');
           const quill = new QuillConstructor.default(editorRef.current, {
-         
+          
             placeholder: 'Write something...',
+           
           });
           quillRef.current = quill;
         } catch (error) {
@@ -140,20 +143,23 @@ export default function CreateNotePage() {
     if (mounted) {
       initQuill();
     }
+
+    return () => {
+      // Cleanup on unmount
+      if (quillRef.current) {
+        // quillRef.current.off?.(); // Remove event listeners if any
+        quillRef.current = null;
+      }
+    };
   }, [mounted]);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   if (!mounted) {
     return <div>Loading editor...</div>;
   }
 
 
-  if (!mounted) {
-    return <div>Loading editor...</div>;
-  }
+
+
   return (
     <div className="relative h-dvh flex flex-col">
       <div className="flex w-full items-center p-2">
