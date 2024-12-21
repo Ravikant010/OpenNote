@@ -1,13 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'quill$': 'quill/dist/quill.js'
-    };
-    return config;
-  },
+
   // Enable static optimization
   reactStrictMode: true,
   // Configure environment variables
@@ -17,7 +11,7 @@ const nextConfig: NextConfig = {
   // Configure TypeScript paths
   typescript: {
     // Disable type checking during build for performance
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   experimental:{
     turbo:  {
