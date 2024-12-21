@@ -18,7 +18,8 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
         try {
           const Quill = (await import('quill'));
           if(Quill){
-          const quill = new Quill.default(editorRef.current, {
+            //@ts-ignore
+          const quill = new Quill(editorRef.current, {
          
             placeholder: 'Write something...',
           });
