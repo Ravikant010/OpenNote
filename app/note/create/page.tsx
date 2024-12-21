@@ -22,19 +22,19 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import Quill from "quill";
+import QuillEditor from "./_components/QuillEditor";
 
 // Dynamic import for Quill
-// const Quill = dynamic(
-//   async () => {
-//     const { default: QuillModule } = await import('quill');
-//     return QuillModule;
-//   },
-//   { 
-//     ssr: false,
-//     loading: () => <div>Loading editor...</div>
-//   }
-// );
+const Quill = dynamic(
+  async () => {
+    const { Quill } = await import('quill');
+    return Quill;
+  },
+  { 
+    ssr: false,
+    loading: () => <div>Loading editor...</div>
+  }
+);
 
 export default function CreateNotePage() {
   const quillRef = useRef<any>(null);
@@ -119,37 +119,34 @@ export default function CreateNotePage() {
     router.push('/');
   };
 
-  useEffect(() => {
-    const initQuill = async () => {
-      if (mounted && editorRef.current && !quillRef.current) {
-        try {
-          const quill =  new Quill(editorRef.current, {
-            placeholder: "Write something...",
-          });
-          // const QuillConstructor = await import('quill');
-          // const quill = new QuillConstructor(editorRef.current, {
+  // useEffect(() => {
+  //   const initQuill = async () => {
+  //     if (mounted && editorRef.current && !quillRef.current) {
+  //       try {
+  //         const QuillConstructor = await import('quill');
+  //         const quill = new QuillConstructor.default(editorRef.current, {
            
-          //   placeholder: 'Write something...',
-          // });
-          quillRef.current = quill;
-        } catch (error) {
-          console.error('Failed to initialize Quill:', error);
-        }
-      }
-    };
+  //           placeholder: 'Write something...',
+  //         });
+  //         quillRef.current = quill;
+  //       } catch (error) {
+  //         console.error('Failed to initialize Quill:', error);
+  //       }
+  //     }
+  //   };
 
-    if (mounted) {
-      initQuill();
-    }
-  }, [mounted]);
+  //   if (mounted) {
+  //     initQuill();
+  //   }
+  // }, [mounted]);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
 
-  if (!mounted) {
-    return <div>Loading editor...</div>;
-  }
+  // if (!mounted) {
+  //   return <div>Loading editor...</div>;
+  // }
 
   return (
     <div className="relative h-dvh flex flex-col">
@@ -176,11 +173,12 @@ export default function CreateNotePage() {
           />
         </CardContent>
       </Card>
-      <div
+      <QuillEditor quillRef={quillRef} />
+      {/* <div
         className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal"
         id="editor"
         ref={editorRef}
-      ></div>
+      ></div> */}
       {/* Rich Text Options - Fixed Positioning */}
       <div
         className={`
