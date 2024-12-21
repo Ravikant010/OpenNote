@@ -125,9 +125,10 @@ export default function CreateNotePage() {
     const initQuill = async () => {
       if (mounted && editorRef.current && !quillRef.current) {
         try {
-          const QuillConstructor = await import('quill', );
+          const QuillConstructor = await import('quill');
           const quill = new QuillConstructor.default(editorRef.current, {
-            placeholder: "Start writing...",
+         
+            placeholder: 'Write something...',
           });
           quillRef.current = quill;
         } catch (error) {
@@ -136,13 +137,19 @@ export default function CreateNotePage() {
       }
     };
 
-    initQuill();
+    if (mounted) {
+      initQuill();
+    }
   }, [mounted]);
 
-  
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (!mounted) {
+    return <div>Loading editor...</div>;
+  }
+
 
   if (!mounted) {
     return <div>Loading editor...</div>;
