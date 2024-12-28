@@ -3,11 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { CircleChevronUp } from "lucide-react";
+import { CircleChevronUp, ChevronLeft, Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import RichTextMenu from "./_components/rich-text";
-// import {QuillEditor} from "@/components/QuillEditor";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
 import QuillEditor from "./_components/QuillEditor";
+import { ModeToggle } from "@/components/theme-toggle";
 
 export default function CreateNotePage() {
   const quillRef = useRef<any>(null);
@@ -63,13 +63,15 @@ export default function CreateNotePage() {
         updatedAt: new Date(),
         isPublic: true,
       };
-      const validatedNote = z.object({
-        title: z.string().min(1),
-        content: z.string().min(1),
-        createdAt: z.date(),
-        updatedAt: z.date(),
-        isPublic: z.boolean(),
-      }).parse(note);
+      const validatedNote = z
+        .object({
+          title: z.string().min(1),
+          content: z.string().min(1),
+          createdAt: z.date(),
+          updatedAt: z.date(),
+          isPublic: z.boolean(),
+        })
+        .parse(note);
       const response = await fetch("/api/save-note", {
         method: "POST",
         headers: {
@@ -116,36 +118,65 @@ export default function CreateNotePage() {
 
   const handleConfirmCancel = () => {
     setShowConfirmDialog(false);
-    router.push('/');
+    router.push("/");
   };
 
   return (
-    <div className="relative h-dvh flex flex-col">
-      <div className="flex w-full items-center p-2">
-        <Button variant={"ghost"} onClick={handleCancel}>Cancel</Button>
-        <div className="flex-1 text-center">Notes</div>
-        <Button variant={"ghost"} onClick={() => setShowSaveDialog(true)}>
-          Save
-        </Button>
-      </div>
-      <Separator />
-      <div className="text-sm text-gray-500 flex justify-between p-2">
-        <div>{currentDate}</div>
-        <div>{currentTime}</div>
-      </div>
-      <Card className="mx-2 bg-transparent border-none shadow-none">
-        <CardContent className="p-0">
-          <Input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter note title..."
-            className="text-lg font-semibold border-none focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground"
-          />
-        </CardContent>
-      </Card>
-      <QuillEditor quillRef={quillRef} />
-      {/* Rich Text Options - Fixed Positioning */}
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-b border-border/50 z-50">
+        <div className="flex items-center justify-between px-4 h-16">
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={handleCancel}>
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <div className="text-sm font-medium">Back</div>
+          </div>
+          <div className="flex items-center gap-2">
+            <ModeToggle />
+            <Button
+              onClick={() => setShowSaveDialog(true)}
+              className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              Save Note
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="pt-20 px-4 max-w-4xl mx-auto">
+        <div className="space-y-4">
+          {/* Date and Time */}
+          <div className="flex justify-between text-sm text-muted-foreground">
+            <div>{currentDate}</div>
+            <div>{currentTime}</div>
+          </div>
+
+          {/* Title Input */}
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+            <CardContent className="p-4">
+              <Input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter note title..."
+                className="text-2xl font-semibold border-none focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground"
+              />
+            </CardContent>
+          </Card>
+
+          {/* Editor */}
+          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+            <CardContent className="p-4">
+              <QuillEditor quillRef={quillRef} />
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+
+      {/* Rich Text Menu */}
       <div
         className={`
           fixed 
@@ -154,8 +185,10 @@ export default function CreateNotePage() {
           right-0 
           transition-transform 
           duration-300 
-          lg:top-0
-          lg:absolute
+          bg-background/80
+          backdrop-blur-lg
+          border-t
+          border-border/50
           ${ShowRichTextOptions ? "translate-y-0" : "translate-y-full"}
         `}
       >
@@ -163,27 +196,31 @@ export default function CreateNotePage() {
           <RichTextMenu quillRef={quillRef} handleMenu={handleMenu} />
         )}
       </div>
-      {/* Chevron Button - Fixed Positioning */}
-      <div
+
+      {/* Toggle Button */}
+      <Button
+        variant="outline"
+        size="icon"
         className={`
           fixed 
-          bottom-5 
-          left-1/2 
-          -translate-x-1/2 
+          bottom-6 
+          right-6
+          h-12
+          w-12
+          rounded-full
+          shadow-lg
           transition-all 
           duration-300 
           ${ShowRichTextOptions ? "opacity-0" : "opacity-100"}
         `}
+        onClick={handleMenu}
       >
-        <CircleChevronUp
-          width={26}
-          height={26}
-          className="cursor-pointer hover:scale-110"
-          onClick={handleMenu}
-        />
-      </div>
+        <CircleChevronUp className="h-6 w-6" />
+      </Button>
+
+      {/* Dialogs */}
       <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Save Note</DialogTitle>
             <DialogDescription>
@@ -199,22 +236,28 @@ export default function CreateNotePage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Enter note title"
+                  className="bg-background/50"
                 />
               </div>
             )}
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={handleCancel}>
+            <Button variant="outline" onClick={() => setShowSaveDialog(false)}>
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={isValidating}>
+            <Button 
+              onClick={handleSave} 
+              disabled={isValidating}
+              className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white"
+            >
               {isValidating ? "Saving..." : "Save Note"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Confirm Cancel</DialogTitle>
             <DialogDescription>
@@ -222,15 +265,22 @@ export default function CreateNotePage() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowConfirmDialog(false)}>
-              No
+            <Button
+              variant="outline"
+              onClick={() => setShowConfirmDialog(false)}
+            >
+              No, Keep Editing
             </Button>
-            <Button onClick={handleConfirmCancel}>
-              Yes, Cancel
+            <Button 
+              onClick={handleConfirmCancel}
+              variant="destructive"
+            >
+              Yes, Discard Changes
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
       <Toaster />
     </div>
   );

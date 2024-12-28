@@ -9,6 +9,7 @@ import { usernameSchema, passwordSchema } from '@/models/index'
 import Auth from '@/app/login/auth'
 import { signup } from '@/services/actions/auth-actions'
 import { useRouter } from 'next/navigation'
+import { ModeToggle } from './theme-toggle'
 
 export default function SignupForm() {
   const [step, setStep] = useState<1 | 2>(1)
@@ -16,9 +17,6 @@ export default function SignupForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
-  useEffect(() => {
-    // Ensure client-side only code runs here
-  }, [])
 
   const handleUsernameSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,7 +39,6 @@ export default function SignupForm() {
     try {
       await passwordSchema.parseAsync({ password })
       await signup({ email, password, providerId: "open-note" })
-    
       router.push('/')
     } catch (err) {
       if (err instanceof Error) {
@@ -51,60 +48,81 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold">Welcome to Open-Note</h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Contact management designed for teams and individuals
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
+      {/* Theme toggle in top right */}
+      <div className="absolute top-6 right-6 z-50">
+        <ModeToggle />
+      </div>
+
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-r from-purple-500/20 via-fuchsia-500/10 to-pink-500/20 blur-[120px] animate-pulse" />
+      </div>
+
+      <div className="w-full max-w-xl mx-auto space-y-12 p-8 relative z-10">
+        <div className="text-center space-y-4">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
+            Open Note
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Your ideas, beautifully organized
           </p>
         </div>
 
-        <div className="mt-8">
+        <div className="bg-card/50 backdrop-blur-lg rounded-xl border border-border/50 p-8 space-y-8 shadow-xl">
           <Auth />
 
-          <div className="mt-6 text-sm">
-            <div className="relative flex items-center">
-              <div className="flex-grow border-t border-gray-300" />
-              <span className="px-2 text-gray-500">Or continue with</span>
-              <div className="flex-grow border-t border-gray-300" />
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-sm uppercase">
+              <span className="bg-card px-4 text-muted-foreground">
+                Or continue with email
+              </span>
             </div>
           </div>
 
           {step === 1 ? (
-            <form onSubmit={handleUsernameSubmit} className="mt-6 space-y-6">
-              <div>
-                <Label htmlFor="username">Email</Label>
+            <form onSubmit={handleUsernameSubmit} className="space-y-6">
+              <div className="space-y-3">
+                <Label htmlFor="email" className="text-base">Email</Label>
                 <Input
-                  id="username"
-                  type="text"
+                  id="email"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 rounded-md"
-                  placeholder="Enter your username"
+                  className="bg-background/50 h-12 text-base"
+                  placeholder="Enter your email"
                   required
                 />
               </div>
-              <Button type="submit" className="w-full transition-colors duration-300 hover:bg-[#151617] hover:text-white rounded-lg">
-                Next
+              <Button 
+                type="submit" 
+                className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white transition-all duration-300"
+              >
+                Continue
               </Button>
             </form>
           ) : (
-            <form onSubmit={handleSignup} className="mt-6 space-y-6">
-              <div>
-                <Label htmlFor="password">Password</Label>
+            <form onSubmit={handleSignup} className="space-y-6">
+              <div className="space-y-3">
+                <Label htmlFor="password" className="text-base">Password</Label>
                 <Input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 rounded-md"
-                  placeholder="Enter your password"
+                  className="bg-background/50 h-12 text-base"
+                  placeholder="Create a password"
                   required
                 />
               </div>
-              <Button type="submit" className="w-full transition-colors duration-300 hover:bg-gray-700 hover:text-white rounded-lg">
-                Sign up
+              <Button 
+                type="submit" 
+                className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white transition-all duration-300"
+              >
+                Create Account
               </Button>
             </form>
           )}
@@ -115,6 +133,13 @@ export default function SignupForm() {
             </Alert>
           )}
         </div>
+
+        <p className="text-center text-base text-muted-foreground">
+          Already have an account?{" "}
+          <a href="/login" className="font-medium text-primary hover:underline">
+            Sign in
+          </a>
+        </p>
       </div>
     </div>
   )
