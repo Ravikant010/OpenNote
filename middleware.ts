@@ -5,64 +5,44 @@ export async function middleware(req: NextRequest) {
   const session = await getSession();
   const path = req.nextUrl.pathname;
 
-  // Public routes that logged-in users should not access
-  const publicRoutes = ['/login', '/signup'];
-
+  // Auth pages that logged-in users shouldn't access
+  const AUTH_PAGES = ['/login', '/signup'];
+  
   // Protected routes that require authentication
-  const protectedRoutes = [
-    '/note/create',
-    '/profile',
-    '/settings'
-  ];
+  const PROTECTED_ROUTES = ['/note/create', '/profile', '/settings', '/dashboard'];
+  
+  // Check if current path is an auth page
+  const isAuthPage = AUTH_PAGES.includes(path);
+  
+  // Check if current path is a protected route
+  const isProtectedRoute = PROTECTED_ROUTES.some(route => 
+    path.startsWith(route) || path === route
+  );
 
-  // Public API routes that do not require authentication
-  const publicApiRoutes = ['/api/all-notes', '/api/note-user', "/api/note"];
-
-  // Public routes that do not require authentication
-  const publicNoteRoutes = new RegExp('^/[^/]+/note/[^/]+$');
-
-  // If trying to access a public route while logged in, redirect to profile
-  if (publicRoutes.includes(path) && session?.userId) {
-    return NextResponse.redirect(new URL('/profile', req.url));
+  // Redirect logged-in users trying to access auth pages
+  if (isAuthPage && session?.userId) {
+    return NextResponse.redirect(new URL('/', req.url));
   }
 
-  // If trying to access a protected route without being logged in, redirect to login
-  if (
-    protectedRoutes.some(route => path.startsWith(route)) && 
-    !session?.userId
-  ) {
-    return NextResponse.redirect(new URL('/login', req.url));
+  // Redirect non-logged-in users trying to access protected routes
+  if (isProtectedRoute && !session?.userId) {
+    console.log('Unauthorized access attempt to:', path);
+    const redirectUrl = new URL('/login', req.url);
+    redirectUrl.searchParams.set('from', path);
+    return NextResponse.redirect(redirectUrl);
   }
 
-  // If trying to access a protected API route without being logged in, return unauthorized
-  if (
-    path.startsWith('/api') &&
-    !publicApiRoutes.includes(path) &&
-    !session?.userId
-  ) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  // Allow access to public note routes
-  if (publicNoteRoutes.test(path)) {
-    return NextResponse.next();
-  }
-
-  // Allow access to the route
   return NextResponse.next();
 }
 
-// Specify which routes this middleware should check
+// Configure middleware to run on specific paths
 export const config = {
   matcher: [
-    '/',
-    '/note/create',
     '/login',
     '/signup',
+    '/note/create',
     '/profile/:path*',
     '/settings/:path*',
-    '/api/:path*',
-   
-    '/:username/note/:noteId'
+    '/dashboard/:path*',
   ]
 };

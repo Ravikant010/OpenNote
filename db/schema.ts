@@ -23,19 +23,23 @@ export const notes = pgTable('notes', {
   content: text('content').notNull(),
   tags: jsonb('tags'),
   isPublic: boolean('is_public').notNull().default(true),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id').notNull().references(() => users.id, {
+    onDelete: "cascade"  // Delete notes when user is deleted
+  }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull()
 }, (table) => ({
   userNotesIdx: uniqueIndex('user_notes_idx').on(table.userId, table.createdAt)
 }));
 
-
-
 export const likes = pgTable('likes', {
   id: serial('id').primaryKey(),
-  noteId: integer('note_id').notNull().references(() => notes.id),
-  userId: integer('user_id').notNull().references(() => users.id),
+  noteId: integer('note_id').notNull().references(() => notes.id, {
+    onDelete: "cascade"  // Delete likes when note is deleted
+  }),
+  userId: integer('user_id').notNull().references(() => users.id, {
+    onDelete: "cascade"  // Delete likes when user is deleted
+  }),
   createdAt: timestamp('created_at').defaultNow().notNull()
 }, (table) => ({
   userLikesIdx: uniqueIndex('user_likes_idx').on(table.userId, table.noteId)
@@ -44,9 +48,11 @@ export const likes = pgTable('likes', {
 export const comments = pgTable('comments', {
   id: serial('id').primaryKey(),
   noteId: integer('note_id').notNull().references(() => notes.id, {
-    onDelete: "cascade"
+    onDelete: "cascade"  // Delete comments when note is deleted
   }),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id').notNull().references(() => users.id, {
+    onDelete: "cascade"  // Delete comments when user is deleted
+  }),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull()
 }, (table) => ({

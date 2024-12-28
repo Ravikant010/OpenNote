@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { usernameSchema, passwordSchema } from '@/models/index'
-import Auth from '@/app/login/auth'
+import Auth from '@/app/(auth)/login/auth'
 import { signup } from '@/services/actions/auth-actions'
 import { useRouter } from 'next/navigation'
 import { ModeToggle } from './theme-toggle'
@@ -51,7 +51,7 @@ export default function SignupForm() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
       {/* Theme toggle in top right */}
       <div className="absolute top-6 right-6 z-50">
-        <ModeToggle />
+        {/* <ModeToggle /> */}
       </div>
 
       {/* Background decorative elements */}

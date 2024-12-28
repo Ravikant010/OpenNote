@@ -133,7 +133,7 @@ export default function CreateNotePage() {
             <div className="text-sm font-medium">Back</div>
           </div>
           <div className="flex items-center gap-2">
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             <Button
               onClick={() => setShowSaveDialog(true)}
               className="bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white"
