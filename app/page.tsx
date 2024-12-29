@@ -6,11 +6,13 @@ import Body from "@/components/layout/body";
 import Footer from "@/components/layout/footer";
 import Link from "next/link";
 import { getSession } from "@/lib/session";
-import { fetchAllNotes } from "@/services/apis/api";
+// import { fetchAllNotes } from "@/services/apis/api";
 import { NavMenu } from "@/components/nav-menu"; 
+import { getAllNotes } from "@/services/actions/notes";
 export default async function Page() {
   const session = await  getSession()
-  const notes = await fetchAllNotes()
+  const {data:notes}  = await getAllNotes()
+  console.log(notes)
   if(!session.userId)
   return (
     <main className="min-h-screen w-full">
