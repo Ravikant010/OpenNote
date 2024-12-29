@@ -129,9 +129,9 @@ export default async function Page() {
             key={note.id}
             className="block group hover:no-underline"
           >
-            <div className="group bg-white/5 backdrop-blur-lg rounded-xl border border-purple-500/10 hover:border-blue-500/30 shadow-lg hover:shadow-purple-500/10 transform hover:-translate-y-1 transition-all duration-300">
+            <div className="group bg-white/5 backdrop-blur-lg rounded-xl border border-purple-500/10 hover:border-blue-500/30 shadow-lg hover:shadow-purple-500/10 transform hover:-translate-y-1 transition-all duration-300 h-60">
               <div className="p-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-fit" />
                 <h2 
                   className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent prose prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: note.title }}

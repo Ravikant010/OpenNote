@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { ToastProvider } from "@/components/ui/toast";
 
 import ThemeProvider  from "@/components/ThemeProvider";
 
@@ -15,6 +15,7 @@ import ThemeProvider  from "@/components/ThemeProvider";
 //   subsets: ["latin"],
 // });
 import { Analytics } from '@vercel/analytics/next';
+import { Toaster } from "@/components/ui/toaster";
 export const metadata: Metadata = {
   title: "open-note",
   description: "write your note",
@@ -32,8 +33,12 @@ export default function RootLayout({
       >
        
         <ThemeProvider>
+
           {children}
+
+   
         </ThemeProvider>
+        <Toaster />
         <Analytics />
       </body>
     </html>

@@ -70,10 +70,10 @@ export class TextFormatting {
   codeBlock = () => formats["code-block"](this.quill);
 
   // Color and font formatters
-  setBackground = (color?: string) => formats.background(this.quill, color);
-  setColor = (color?: string) => formats.color(this.quill, color);
-  setFont = (font?: string) => formats.font(this.quill, font);
-  setSize = (size?: string) => formats.size(this.quill, size);
+  setBackground = (color: string) => formats.background(this.quill, color);
+  setColor = (color: string) => formats.color(this.quill, color);
+  setFont = (font: string) => formats.font(this.quill, font);
+  setSize = (size: string) => formats.size(this.quill, size);
 
   // Structure formatters
   setHeader = (level: HeaderLevel) => formats.header(this.quill, level);

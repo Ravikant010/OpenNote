@@ -34,7 +34,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
   }
   return (
     <div
-      className="flex-grow overflow-auto mx-2 min-h-[200px] bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal placeholder:text-white"
+      className="flex-grow overflow-auto mx-2  bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal placeholder:text-white text-lg border-2 min-h-[90%]"
       id="editor"
       ref={editorRef}
     ></div>

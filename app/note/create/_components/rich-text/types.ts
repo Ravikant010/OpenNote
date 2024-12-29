@@ -5,7 +5,7 @@ import { MenuOption, MenuSection } from '../_types/menu';
 
 export interface RichTextMenuProps {
   quillRef: RefObject<Quill>;
-  handleMenu: () => void;
+  handleMenu?: () => void;
 }
 
 export interface FormattingProps {

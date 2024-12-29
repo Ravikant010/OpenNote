@@ -22,6 +22,7 @@ const RichTextMenu: React.FC<RichTextMenuProps> = ({ quillRef, handleMenu }) => 
 
     // Handle direct formatting options
     const formatFunction:any = formats[option.formatType as keyof typeof formats];
+    console.log(formatFunction)
     if (formatFunction) {
       if (option.formatType === 'align' || 
           option.formatType === 'background' || 

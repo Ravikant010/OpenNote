@@ -43,7 +43,7 @@ export const menu_options:MenuSection[] = [
             { name: "blockquote", description: "Toggle blockquote" },
             { name: "indent", description: "Adjust indentation" },
             { name: "list", description: "Toggle list (ordered/bullet)" },
-            { name: "bullet", description: "Toggle bullet (ordered/bullet)" }
+         
 
             
 
@@ -57,12 +57,12 @@ export const menu_options:MenuSection[] = [
     //         { name: "formula", description: "Insert formula" }
     //     ]
     // },
-    {
-        section: "Media",
-        options: [
-            // { name: "link", description: "Insert/edit link" },
-            { name: "image", description: "Insert image" },
+    // {
+    //     section: "Media",
+    //     options: [
+    //         // { name: "link", description: "Insert/edit link" },
+    //         { name: "image", description: "Insert image" },
       
-        ]
-    }
+    //     ]
+    // }
 ];

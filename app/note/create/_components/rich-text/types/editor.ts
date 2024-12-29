@@ -6,16 +6,6 @@ export interface QuillRange {
   length: number;
 }
 
-// export interface QuillEditor extends Quill {
-//   getSelection(): QuillRange | null;
-//   getFormat(range: QuillRange): Record<string, any>;
-//   format(format: string, value: any): any;
-//   formatText(index: number, length: number, format: string, value: any): void;
-//   insertEmbed(index: number, type: string, value: string, source?: string): void;
-//   setSelection(index: number, length: number): void;
-// }
-
-// Format Types
 export type AlignPosition = 'left' | 'center' | 'right' | 'justify';
 export type HeaderLevel = 1 | 2 | 3 | 4 | 5 | 6;
 export type ListType = 'bullet' | 'ordered';

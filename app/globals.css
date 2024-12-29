@@ -53,6 +53,60 @@ body {
   }
 }
 
+/* Editor Heading Styles */
+.ql-editor h1 {
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.ql-editor  h2 {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.ql-editor  h3 {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.ql-editor h4 {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.ql-editor  h5 {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.ql-editor  h6 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+
+/* Simple Blockquote Style */
+blockquote {
+  padding-left: 10px;
+  border-left: 2px solid #888;
+  margin: 1em 0;
+  font-style: italic;
+
+}
+
+
 @layer base {
   * {
     @apply border-border;
