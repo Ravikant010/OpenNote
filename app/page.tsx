@@ -22,11 +22,7 @@ export default async function Page() {
         <ModeToggle />
       </div>
       <FloatingNav navItems={[
-        {
-          name: "Dashboard",
-          link: "/dashboard",
-          icon: <LayoutDashboard className="w-5 h-5" />
-        },
+      
         {
           name: "Create Note",
           link: "/note/create",
