@@ -138,10 +138,11 @@ export default function Body() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 text-center relative z-10 mt-20 sm:mt-32 lg:mt-40">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-8 leading-relaxed">
+        <div className='max-w-4xl mx-auto '>
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-8 leading-relaxed ">
           We Are Excited to Have You Join Our Community
         </h1>
-
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 my-16 sm:my-24 lg:my-32">
           {features.map(feature => (
             <FeatureCard
