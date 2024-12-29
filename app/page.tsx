@@ -9,6 +9,7 @@ import { getSession } from "@/lib/session";
 // import { fetchAllNotes } from "@/services/apis/api";
 import { NavMenu } from "@/components/nav-menu"; 
 import { getAllNotes } from "@/services/actions/notes";
+import { ModeToggle } from "@/components/theme-toggle";
 export default async function Page() {
   const session = await  getSession()
   const {data:notes}  = await getAllNotes() || []
@@ -16,6 +17,7 @@ export default async function Page() {
   if(!session.userId)
   return (
     <main className="min-h-screen w-full">
+      <ModeToggle />
       <div className="fixed top-4 right-4 z-50">
         {/* <ModeToggle /> */}
       </div>

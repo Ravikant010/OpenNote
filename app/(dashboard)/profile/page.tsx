@@ -1,4 +1,4 @@
-"use server";
+
 import { getSession } from "@/lib/session";
 import { db } from "@/db/db";
 import { notes, users } from "@/db/schema";
@@ -15,10 +15,10 @@ import { PlusCircle, BookOpen } from "lucide-react";
 
 export default async function Profile() {
   const user = await get_user();
-  const { data } = await getAllNotes();
-  console.log(data);
+  const { data } = await getAllNotes()
 
-  console.log(data, "Dfdf");
+
+
   if (data?.length)
     return (
       <div>
