@@ -1,12 +1,6 @@
-// import { useEffect, useState } from "react";
 import Header  from "@/components/layout/header";
-// import Menu from "@/components/menu";
-// import NoteCard, { Note } from "@/components/note-card";
-// import { useToast } from "@/hooks/use-toast";
 import { FloatingNav } from "@/components/ui/floating_navbar";
 import { LayoutDashboard, PlusCircle, UserCircle } from "lucide-react";
-// import { GridBackground } from "@/components/ui/GridBG";
-// import { BentoGrid, BentoGridDemo } from "@/components/ui/BentoGrid";
 import { HeroSection } from "@/components/home/hero-section";
 import Body from "@/components/layout/body";
 import Footer from "@/components/layout/footer";
@@ -17,57 +11,6 @@ import { NavMenu } from "@/components/nav-menu";
 export default async function Page() {
   const session = await  getSession()
   const notes = await fetchAllNotes()
-
-//   const response = await fetch(`/api/all-notes`);
-//   if (!response.ok) {
-//     throw new Error('Failed to fetch all notes');
-//   }
-//   const { notes } = await response.json();
-//   if(!notes) return [];
-//   return notes;
-// }
-// export default function Home() {
-//   const [isShowMenu, setShowMenu] = useState(false);
-//   const [loader, setLoader] = useState(true);
-//   const [notes, setNotes] = useState<Note[]>([]);
-//   const { toast } = useToast();
-// // const session = getSession()
-//   function toggleMenu() {
-//     setShowMenu(!isShowMenu);
-//   }
-//   const handleLoadeer = () => {    setLoader(false);  }
-//   useEffect(() => {
-//     fetchAllNotes().then(setNotes).then(handleLoadeer).catch(error => {
-//       console.error(error);
-//       toast({
-//         title: "Error",
-//         description: (error as Error).message,
-//         variant: "destructive",
-//         duration: 3000,
-//       });
-//     });
-//   }, []);
-//   const handleDelete = async (noteId: number) => {
-//     try {
-//       await fetch(`/api/deleteNote?noteId=${noteId}`, {
-//         method: 'DELETE',
-//       });
-//       setNotes(prevNotes => prevNotes.filter(note => note.id !== noteId));
-//       toast({
-//         title: "Success",
-//         description: "Note deleted successfully!",
-//         duration: 3000,
-//       });
-//     } catch (error) {
-//       toast({
-//         title: "Error",
-//         description: (error as Error).message,
-//         variant: "destructive",
-//         duration: 3000,
-//       });
-//     }
-//   };
-  // if(loader) return <div>Loading...</div>
   if(!session.userId)
   return (
     <main className="min-h-screen w-full">

@@ -10,7 +10,7 @@ interface Note {
 
 export async function fetchAllNotes(): Promise<Note[]> {
   try {
-    const response = await fetch(`http://localhost:3000/api/all-notes`);
+    const response = await fetch(`/api/all-notes`);
     if (!response.ok) {
       throw new Error('Failed to fetch all notes');
     }
