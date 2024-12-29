@@ -236,7 +236,7 @@ export default function NotePage() {
               </button> */}
             </div>
             <div className="space-y-2">
-              {notes.map((e,index) => (
+              {notes &&notes.map((e,index) => (
                 <Button  variant={"outline"}
                   key={index}
                   className="p-2   shadow text-sm font-medium  transition-colors duration-200 w-full text-start  self-start flex justify-start rounded-2xl px-4"

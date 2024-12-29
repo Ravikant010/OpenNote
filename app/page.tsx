@@ -17,7 +17,7 @@ import { NavMenu } from "@/components/nav-menu";
 export default async function Page() {
   const session = await  getSession()
   const notes = await fetchAllNotes()
-  console.log(notes, session.userId)
+
 //   const response = await fetch(`/api/all-notes`);
 //   if (!response.ok) {
 //     throw new Error('Failed to fetch all notes');
