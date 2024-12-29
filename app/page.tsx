@@ -11,7 +11,7 @@ import { NavMenu } from "@/components/nav-menu";
 import { getAllNotes } from "@/services/actions/notes";
 export default async function Page() {
   const session = await  getSession()
-  const {data:notes}  = await getAllNotes()
+  const {data:notes}  = await getAllNotes() || []
   console.log(notes)
   if(!session.userId)
   return (
