@@ -17,9 +17,9 @@ export default async function Page() {
   if(!session.userId)
   return (
     <main className="min-h-screen w-full">
-      <ModeToggle />
+      {/* <ModeToggle /> */}
       <div className="fixed top-4 right-4 z-50">
-        {/* <ModeToggle /> */}
+        <ModeToggle />
       </div>
       <FloatingNav navItems={[
         {
