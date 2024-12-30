@@ -39,6 +39,7 @@ export default function LoginPage() {
       if (response.success) {
         router.push('/'); // Redirect to home page on successful login
       } else {
+        //@ts-ignore
         setError(response.message || 'Login failed. Please try again.');
       }
     } catch (err) {
