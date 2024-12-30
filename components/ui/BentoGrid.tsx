@@ -67,6 +67,7 @@ import {
   IconSignature,
   IconTableColumn,
 } from "@tabler/icons-react";
+import Image from "next/image";
 
 export function BentoGridDemo() {
   return (
@@ -87,47 +88,106 @@ export function BentoGridDemo() {
 const Skeleton = () => (
   <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
 );
+
 const items = [
   {
     title: "The Dawn of Innovation",
     description: "Explore the birth of groundbreaking ideas and inventions.",
-    header: <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Innovation" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa"
+        alt="Innovation"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconClipboardCopy className="h-6 w-6 text-blue-500" />,
   },
   {
     title: "The Digital Revolution",
     description: "Dive into the transformative power of technology.",
-    header: <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Digital Revolution" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+        alt="Digital Revolution"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconFileBroken className="h-6 w-6 text-green-500" />,
   },
   {
     title: "The Art of Design",
     description: "Discover the beauty of thoughtful and functional design.",
-    header: <img src="https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2" alt="Design" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2"
+        alt="Design"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconSignature className="h-6 w-6 text-purple-500" />,
   },
   {
     title: "The Power of Communication",
     description: "Understand the impact of effective communication in our lives.",
-    header: <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3" alt="Communication" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3"
+        alt="Communication"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconTableColumn className="h-6 w-6 text-orange-500" />,
   },
   {
     title: "The Pursuit of Knowledge",
     description: "Join the quest for understanding and enlightenment.",
-    header: <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6" alt="Knowledge" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6"
+        alt="Knowledge"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconArrowWaveRightUp className="h-6 w-6 text-yellow-500" />,
   },
   {
     title: "The Joy of Creation",
     description: "Experience the thrill of bringing ideas to life.",
-    header: <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="Creation" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+        alt="Creation"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconBoxAlignTopLeft className="h-6 w-6 text-pink-500" />,
   },
   {
     title: "The Spirit of Adventure",
     description: "Embark on exciting journeys and thrilling discoveries.",
-    header: <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" alt="Adventure" className="w-full h-32 object-cover" />,
+    header: (
+      <Image
+        src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800"
+        alt="Adventure"
+        width={500}
+        height={200}
+        className="w-full h-32 object-cover"
+      />
+    ),
     icon: <IconBoxAlignRightFilled className="h-6 w-6 text-red-500" />,
   },
 ];
+
+export default items;

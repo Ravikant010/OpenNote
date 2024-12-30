@@ -84,49 +84,49 @@ const features = [
     title: "Study Notes",
     description: "Create and organize your academic notes with ease",
     bgImage: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-    hoverGif: "https://i.giphy.com/media/3o7btZ1Gm7ZL25pLMs/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif" // Example: Replace with a GIF of someone writing notes
   },
   {
     title: "Research Papers",
     description: "Collaborate on academic research and papers",
     bgImage: "https://images.unsplash.com/photo-1516414447565-b14be0adf13e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-    hoverGif: "https://i.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif" // Example: Replace with a GIF of someone researching
   },
   {
     title: "Project Ideas",
     description: "Document and share your innovative project concepts",
     bgImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-    hoverGif: "https://i.giphy.com/media/l0HlMZrXA2H7aqpwI/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/l0HlMZrXA2H7aqpwI/giphy.gif" // Example: Replace with a GIF of brainstorming or planning
   },
   {
     title: "Innovation Hub",
     description: "Explore groundbreaking ideas and inventions",
     bgImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif" // Example: Replace with a GIF of innovation or creativity
   },
   {
     title: "Design Studio",
     description: "Discover the beauty of thoughtful and functional design",
     bgImage: "https://images.unsplash.com/photo-1493934558415-9d19f0b2b4d2",
-    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif" // Example: Replace with a GIF of someone designing
   },
   {
     title: "Communication Corner",
     description: "Understand the impact of effective communication",
     bgImage: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3",
-    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif" // Example: Replace with a GIF of people communicating
   },
   {
     title: "Knowledge Quest",
     description: "Join the quest for understanding and enlightenment",
     bgImage: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6",
-    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif" // Example: Replace with a GIF of someone learning or exploring
   },
   {
     title: "Adventure Zone",
     description: "Embark on exciting journeys and thrilling discoveries",
     bgImage: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800",
-    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif"
+    hoverGif: "https://i.giphy.com/media/3o7TKsQ8gqVrXWgG7m/giphy.gif" // Example: Replace with a GIF of adventure or exploration
   }
 ];
 export default function Body() {

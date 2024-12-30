@@ -13,6 +13,18 @@ const nextConfig: NextConfig = {
     // Disable type checking during build for performance
     ignoreBuildErrors: false,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: "https",
+        hostname: "i.giphy.com"
+      }
+    ],
+  },
   experimental:{
     turbo:  {
       resolveExtensions: [
