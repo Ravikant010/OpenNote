@@ -196,7 +196,7 @@ export async function signup(UserData: User) {
       session.email = existingUser.email;
       session.username = existingUser.username;
       await session.save();
-      return redirect("/explore");
+      return redirect("/");
     }
 
     const [newUser] = await db.insert(users).values({
@@ -241,14 +241,19 @@ export async function signup(UserData: User) {
 }
 
 export async function login(formData: FormData) {
-  const username = formData.get("username") as string;
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+
+  const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const session = await getSession();
 
   try {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+    const [user] = await db.select().from(users).where(eq(users.email, email));
 
     if (!user || !(await bcrypt.compare(password, user.password || ""))) {
+      console.log("no found")
       return { error: "Invalid credentials" };
     }
 
