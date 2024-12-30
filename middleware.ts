@@ -9,7 +9,7 @@ export async function middleware(req: NextRequest) {
   const AUTH_PAGES = ['/login', '/signup'];
   
   // Protected routes that require authentication
-  const PROTECTED_ROUTES = ['/note/create', '/profile', '/settings', '/dashboard'];
+  const PROTECTED_ROUTES = ['/note/create', '/profile', '/settings',];
   
   // Check if current path is an auth page
   const isAuthPage = AUTH_PAGES.includes(path);

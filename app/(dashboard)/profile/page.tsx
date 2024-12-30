@@ -1,4 +1,4 @@
-
+"use server"
 import { getSession } from "@/lib/session";
 import { db } from "@/db/db";
 import { notes, users } from "@/db/schema";
@@ -18,8 +18,6 @@ export default async function Profile() {
   const { data } = await getAllNotes()
 
 
-
-  if (data?.length)
     return (
       <div>
         {/* @ts-ignore */}
@@ -27,5 +25,5 @@ export default async function Profile() {
       </div>
     );
 
-  return  redirect("/login");
+  // return  redirect("/login");
 }

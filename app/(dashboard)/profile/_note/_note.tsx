@@ -24,9 +24,7 @@ interface ProfilePageProps {
 }
 
 export default function ProfilePage({ notes: _notes, user }: ProfilePageProps) {
-  if (!user) {
-    redirect('/login');
-  }
+
 
   const [notes, setNotes] = useState<Note[]>(Array.isArray(_notes) ? _notes : []);
 
