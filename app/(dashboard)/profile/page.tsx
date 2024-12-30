@@ -55,14 +55,12 @@ if(data?.length){
   </p>
 
   {/* Call-to-Action Button */}
-  <button
+  <Link href="/note/create"
     className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-    onClick={() => {
-      // Add logic to create a new note
-    }}
+  
   >
     Create Your First Note
-  </button>
+  </Link>
 </div>
   // return  redirect("/login");
 }
