@@ -1,5 +1,5 @@
-"use client";
 
+import AnimateOnScroll from "../animation";
 import { FeatureCard } from "./feature-card";
 
 const features = [
@@ -26,7 +26,12 @@ const features = [
 export function FeatureCardsGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-16 sm:my-24 lg:my-32">
-      {features.map((feature) => (
+     
+      {features.map((feature, index) => (
+            <AnimateOnScroll
+            key={index}
+            animationClass="opacity-100 translate-y-0"
+          >
         <FeatureCard
           key={feature.title}
           title={feature.title}
@@ -34,6 +39,7 @@ export function FeatureCardsGrid() {
           defaultImage={feature.bgImage}
           hoverImage={feature.hoverGif}
         />
+        </AnimateOnScroll>
       ))}
     </div>
   );

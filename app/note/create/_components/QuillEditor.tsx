@@ -15,7 +15,9 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
           const Quill = (await import('quill'));
           const quill = new Quill.default(editorRef.current, {
             placeholder: 'Write something...',
+            
           });
+          quill.container.style.fontSize = "2rem"
           quillRef.current = quill;
         } catch (error) {
           console.error('Failed to initialize Quill:', error);
@@ -34,7 +36,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({ quillRef }) => {
   }
   return (
     <div
-      className="flex-grow overflow-auto mx-2  bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal placeholder:text-white text-xl border-2 min-h-[90%]"
+      className="flex-grow overflow-auto  bg-white dark:bg-transparent focus:border-none focus:outline-none font-mono tracking-normal placeholder:text-white "
       id="editor"
       ref={editorRef}
     ></div>

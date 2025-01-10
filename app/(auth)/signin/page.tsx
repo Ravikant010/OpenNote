@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { usernameSchema, passwordSchema } from '@/models/index';
-import { login } from '@/services/actions/auth-actions';
-import { useRouter } from 'next/navigation';
+import { usernameSchema, passwordSchema } from "@/models/index";
+import { login } from "@/services/actions/auth-actions";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,29 +21,31 @@ export default function LoginPage() {
 
     try {
       // Get values from the form using formRef
-      const email = (formRef.current['email'] as HTMLInputElement).value;
-      const password = (formRef.current['password'] as HTMLInputElement).value;
+      const email = (formRef.current["email"] as HTMLInputElement).value;
+      const password = (formRef.current["password"] as HTMLInputElement).value;
 
       // Validate email and password
-    //   usernameSchema.parse(email); // Validate email as a string
-    //   passwordSchema.parse(password); // Validate password as a string
+      //   usernameSchema.parse(email); // Validate email as a string
+      //   passwordSchema.parse(password); // Validate password as a string
 
       // Create FormData object
       const formData = new FormData();
-      formData.append('email', email);
-      formData.append('password', password);
+      formData.append("email", email);
+      formData.append("password", password);
 
       // Perform login action with FormData
       const response = await login(formData);
 
       if (response.success) {
-        router.push('/'); // Redirect to home page on successful login
+        router.push("/"); // Redirect to home page on successful login
       } else {
         //@ts-ignore
-        setError(response.message || 'Login failed. Please try again.');
+        setError(response.message || "Login failed. Please try again.");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Invalid email or password.');
+      setError(
+        err instanceof Error ? err.message : "Invalid email or password."
+      );
     }
   };
 
@@ -58,7 +60,9 @@ export default function LoginPage() {
         )}
         <form ref={formRef} onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-3">
-            <Label htmlFor="email" className="text-base">Email</Label>
+            <Label htmlFor="email" className="text-base">
+              Email
+            </Label>
             <Input
               id="email"
               name="email"
@@ -69,7 +73,9 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-3">
-            <Label htmlFor="password" className="text-base">Password</Label>
+            <Label htmlFor="password" className="text-base">
+              Password
+            </Label>
             <Input
               id="password"
               name="password"

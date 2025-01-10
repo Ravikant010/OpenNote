@@ -81,7 +81,7 @@ export default function NoteDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20 ql-editor">
       {/* Header */}
       <div className="sticky top-0 bg-background/80 backdrop-blur-lg border-b border-border/50 z-50">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">

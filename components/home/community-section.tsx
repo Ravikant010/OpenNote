@@ -1,6 +1,7 @@
 "use client";
 
 import { FeatureCardsGrid } from "@/components/ui/feature-cards-grid";
+import AnimateOnScroll from "../animation";
 
 export function CommunitySection() {
   return (
@@ -14,8 +15,9 @@ export function CommunitySection() {
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent mb-8 leading-relaxed">
           We Are Excited to Have You Join Our Community
         </h1>
-
+     
         <FeatureCardsGrid />
+   
       </div>
     </section>
   );

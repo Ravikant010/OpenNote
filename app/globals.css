@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -28,6 +29,14 @@ body {
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -50,6 +59,14 @@ body {
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -130,3 +147,158 @@ blockquote {
 html {
   scroll-behavior: smooth;
 }
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+
+.ql-editor {
+  height: 100%; /* Ensure it fills the editor div */
+}
+
+.ql-editor:focus {
+  outline: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fix for ordered list numbering */
+.editor ol {
+  list-style-type: decimal;
+  counter-reset: list-counter; /* Reset the list counter */
+}
+
+.editor ol li {
+  counter-increment: list-counter; /* Increment the counter for each list item */
+}
+
+/* .editor ol li::before {
+  content: counter(list-counter) ". "; /* Show the counter before the text */
+
+
+
+/* Editor Heading Styles */
+.editor h1 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.editor h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.editor h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.editor h4 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.editor h5 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.editor h6 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+/* Simple Blockquote Style */
+
+
+/* blockquote {
+  padding-left: 10px;
+  border-left: 2px solid #888;
+  margin: 1em 0;
+  font-style: italic;
+} */
+
+/* Editor List Styling */
+.editor ol, .editor ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.editor ol li, .editor ul li {
+  margin-bottom: 8px;
+}
+
+.editor ol {
+  list-style-type: decimal; /* Ordered lists show numbers */
+}
+
+.editor ul {
+  list-style-type: disc; /* Unordered lists show bullets */
+}
+/* 
+.editor {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  border: 1px solid #ccc;
+  min-height: 200px;
+  white-space: pre-wrap;
+  height: 100%; 
+  overflow: auto;
+} */

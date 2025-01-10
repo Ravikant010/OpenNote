@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "i.giphy.com"
+      },
+      {
+        protocol: "https",
+        hostname: "assets.aceternity.com",
+      },
+      {
+        protocol: "https",
+        hostname:"api.dicebear.com"
       }
     ],
   },
