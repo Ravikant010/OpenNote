@@ -182,11 +182,20 @@ import {
   GraduationCap,
 } from "lucide-react";
 import Link from "next/link";
+import { get_user_id } from "@/services/actions/User";
+import { get_notes } from "@/services/actions/Note";
+import { NoteCard } from "@/components/NoteCard";
+import { CommunityNotes } from "@/components/Cummnity";
 interface SectionTitleProps {
   icon: React.ElementType; // Expect a component type
   title: string;
   subtitle: string;
 }
+
+
+
+
+
 const SectionTitle: React.FC<SectionTitleProps> = ({
   icon: Icon,
   title,
@@ -242,7 +251,7 @@ const CategoryBadge: React.FC<CategoryBadgeProps> = ({ Icon, text }) => (
 );
 // Export components
 export { SectionTitle, ProcessCard, CategoryBadge };
-const LandingPage = () => {
+const LandingPage = async() => {
   const categories = [
     { icon: Code, text: "Tech" },
     { icon: Heart, text: "Health" },
@@ -252,6 +261,11 @@ const LandingPage = () => {
     { icon: Palette, text: "Art" },
     { icon: GraduationCap, text: "Education" },
   ];
+  //@ts-ignore
+  const userId = await get_user_id()
+  console.log(userId)
+  const notes = await get_notes()
+  if(!userId)
   return (
     <div className="relative w-full font-sans">
       <Hero />
@@ -392,22 +406,78 @@ const LandingPage = () => {
       <Footer />
     </div>
   );
+  return (
+  //  <CommunityNotes notes = {notes}/>
+  // <NewsPage />
+  <div className="container mx-auto px-4 py-8">
+  {/* Header Section */}
+  <div className="mb-8">
+    <h1 className="text-3xl font-bold mb-4">Open Note</h1>
+    <div className="flex gap-4 mb-6">
+      <button className="text-sm font-medium hover:text-yellow-500">News</button>
+      <button className="text-sm font-medium hover:text-yellow-500">Newsletter</button>
+      <button className="text-sm font-medium hover:text-yellow-500">Research & Publications</button>
+    </div>
+    
+    {/* Search Bar */}
+    <div className="relative">
+      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+      <Input 
+        className="pl-10 w-full max-w-xl" 
+        placeholder="Enter your search terms..."
+      />
+    </div>
+  </div>
+
+  {/* News Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <CommunityNotes notes={notes}/>
+    {!notes.length && <>no notes yet</> }
+    </div>
+    </div>
+  );
 };
 export default LandingPage;
-{/* <style jsx>{`
-  @keyframes scroll {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
+
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+
+interface NewsItem {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  date: string;
+}
+
+// Extended sample data
+const newsData: NewsItem[] = [
+  {
+    id: "1",
+    title: "Legal Updates and Changes for 2023-2024",
+    description: "Key regulatory changes and legal developments that will impact businesses in the coming year.",
+    category: "Newsletter",
+    date: "2023.12.05"
+  },
+  {
+    id: "2",
+    title: "Understanding Recent Supreme Court Decisions",
+    description: "Analysis of recent landmark cases and their implications for corporate law.",
+    category: "Press Release",
+    date: "2023.11.30"
+  },
+  {
+    id: "3",
+    title: "Corporate Compliance Guidelines 2024",
+    description: "Essential updates to corporate compliance requirements and best practices.",
+    category: "Research",
+    date: "2023.11.28"
   }
-  .animate-scroll {
-    display: inline-block;
-    animation: scroll 20s linear infinite;
-  }
-`}</style>; */}
+];
+
+
 const Footer = () => {
   return (
     <footer className=" text-black py-16">

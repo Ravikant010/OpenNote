@@ -1,8 +1,8 @@
 "use client";
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Note } from "@/components/NoteCard";
-import NoteList from '@/components/NoteCard';
+import { Note } from "@/components/NoteCard_";
+import NoteList from '@/components/NoteCard_';
 import { Toaster } from "@/components/ui/toaster"
 import { useToast } from "@/hooks/use-toast";
 

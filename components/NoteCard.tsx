@@ -1,106 +1,208 @@
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import { Card } from "@/components/ui/card";
+// import { Button } from "@/components/ui/button";
+// import { ChevronRight } from "lucide-react";
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// import { Badge } from "./ui/badge";
+// import { get_user_by_id } from "@/services/actions/User";
+// import { User } from "@/db/schema";
+// import DOMPurify from "dompurify";
+// import { useRouter } from "next/navigation";
+// export const NoteCard: React.FC<{
+//   project: {
+//     title: string;
+//     description: string;
+//     userId: number;
+//     category: string;
+//     note_id:number
+//   };
+// }> = ({ project }) => {
+//   const [user, setUser] = useState<User | null>(null);
+
+//   useEffect(() => {
+//     const getUser = async () => {
+//       try {
+//         const userData = await get_user_by_id(project.userId);
+//         if (userData) {
+//           setUser(userData);
+//         }
+//       } catch (error) {
+//         console.error("Failed to fetch user:", error);
+//       }
+//     };
+
+//     getUser();
+//   }, [project.userId]);
+
+//   // Sanitize the description
+//   const sanitizedDescription = DOMPurify.sanitize(
+//     project.description || "No description available."
+//   );
+// const router = useRouter()
+//   return (
+//     <Card className="flex-1 p-6 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out hover:scale-[1.02]" >
+//       <div className="flex flex-col space-y-4">
+//         {/* User Info */}
+      
+//           {user?.avatar ? (
+//               <div className="flex items-center space-x-3">
+//             <Avatar>
+//               <AvatarImage src={user?.avatar || ""} />
+//               <AvatarFallback>
+//                 {user?.username?.charAt(0).toUpperCase() || "U"}
+//               </AvatarFallback>
+//             </Avatar>
+//               <span className="text-sm font-medium text-gray-800">
+//               {user?.username || "Unknown User"}
+//             </span>
+//             </div>
+//           ) : (
+//             <div className="animate-pulse">
+//               <div className="h-10 w-10 rounded-full bg-gray-200" />
+//             </div>
+//           )}
+
+        
+
+
+//         {/* Project Title and Description */}
+//         <div className="flex flex-col gap-2">
+//           {/* Title with single line clamp */}
+//           <h3 className="text-lg font-semibold text-gray-900 line-clamp-1">
+//             {project.title}
+//           </h3>
+
+//           {/* Description with responsive line clamping */}
+//           <div className="prose prose-sm max-w-none text-gray-600 h-20">
+//             <div
+//               className="line-clamp-2 md:line-clamp-3 lg:line-clamp-4"
+//               dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+//             />
+//           </div>
+//         </div>
+
+//         {/* Category Badge */}
+//         <div>
+//           <Badge
+//             variant="outline"
+//             className="rounded-full border-gray-300 text-black ml-2"
+//           >
+//             {project.category}
+//           </Badge>
+//         </div>
+
+//         {/* Explore Button */}
+//         <Button
+//           variant="ghost"
+//           className="mt-2 w-fit rounded-full text-gray-800 hover:bg-gray-100"
+//         onClick={()=>{
+//           router.push(`/${user?.username}/note/${project.note_id}`)
+//         }}>
+//           Explore More
+//           <ChevronRight className="ml-2 h-4 w-4" />
+//         </Button>
+//       </div>
+//     </Card>
+//   );
+// };
+
+
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Clock, Trash } from 'lucide-react';
+import { ChevronRight } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { get_user_by_id } from "@/services/actions/User";
+import { User } from "@/db/schema";
+import DOMPurify from "dompurify";
+import { useRouter } from "next/navigation";
 
-interface NoteListProps {
-  notes: Note[];
-  onDelete: (id: number) => void;
-  username: string;
+interface NoteCardProps {
+  project: {
+    title: string;
+    description: string;
+    userId: number;
+    category: string;
+    note_id: number;
+  };
 }
 
-export interface Note {
-  id: number;
-  title: string;
-  content: string;
-  tags: string[] | null;
-  isPublic: boolean;
-  userId: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export default function NoteList({ notes, onDelete, username }: NoteListProps) {
-  const [expandedNotes, setExpandedNotes] = useState<Set<number>>(new Set());
+export const NoteCard: React.FC<NoteCardProps> = ({ project }) => {
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
-  const toggleExpand = (id: number) => {
-    setExpandedNotes(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userData = await get_user_by_id(project.userId);
+        if (userData) {
+          setUser(userData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
       }
-      return newSet;
-    });
-  };
+    };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+    getUser();
+  }, [project.userId]);
 
-  const handleCardClick = (userId: number, noteId: number) => {
-    router.push(`/${username}/note/${noteId}`);
-  };
+  const sanitizedDescription = DOMPurify.sanitize(
+    project.description || "No description available."
+  );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {notes.map(note => (
-        <Card key={note.id} className="flex flex-col cursor-pointer" onClick={() => handleCardClick(note.userId, note.id)}>
-          <CardHeader>
-            <CardTitle className="flex justify-between items-center">
-              <span className="truncate">{note.title}</span>
-              <div className="flex items-center space-x-2">
-                {note.isPublic ? (
-                  <Eye className="h-5 w-5 text-green-500" />
-                ) : (
-                  <EyeOff className="h-5 w-5 text-red-500" />
-                )}
-                <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(note.id); }}>
-                  <Trash className="h-5 w-5 text-red-500" />
-                </Button>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex-grow">
-            <div 
-              className={`prose max-w-none ${expandedNotes.has(note.id) ? '' : 'line-clamp-3'}`}
-              dangerouslySetInnerHTML={{ __html: note.content }}
-            />
-            {note.content.length > 100 && (
-              <Button 
-                variant="link" 
-                onClick={(e) => { e.stopPropagation(); toggleExpand(note.id); }}
-                className="mt-2 p-0"
-              >
-                {expandedNotes.has(note.id) ? 'Show less' : 'Show more'}
-              </Button>
-            )}
-          </CardContent>
-          <CardFooter className="flex flex-col items-start space-y-2">
-            <div className="flex items-center space-x-2 text-sm text-gray-500">
-              <Clock className="h-4 w-4" />
-              <span>{formatDate(note.createdAt)}</span>
+    <Card className="w-fit  bg-gray-50 transition-colors duration-200 cursor-pointer border-0 shadow-none round"
+          onClick={() => router.push(`/${user?.username}/note/${project.note_id}`)}>
+      <CardContent className="p-6 w-full">
+        <div className="space-y-4">
+          {/* Title */}
+          <h3 className="text-lg font-bold text-gray-900 line-clamp-2 leading-tight">
+            {project.title}
+          </h3>
+
+          {/* Description */}
+          <div 
+            className="text-sm text-gray-600 line-clamp-3 min-h-[4.5rem]"
+            dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+          />
+
+          {/* Footer: User Info, Category, and Date */}
+          <div className="text-yellow-400 hover:text-yellow-500 flex items-center">
+              Read More
+              <ChevronRight className="h-4 w-4 ml-1" />
             </div>
-            {note.tags && note.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {note.tags.map(tag => (
-                  <Badge key={tag} variant="secondary">{tag}</Badge>
-                ))}
-              </div>
-            )}
-          </CardFooter>
-        </Card>
-      ))}
-    </div>
+          <div className="flex items-center justify-between pt-4 text-xs text-gray-500">
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <>
+                  <Avatar className="h-6 w-6">
+                    <AvatarImage src={user.avatar || ""} alt={user.username || "User"} />
+                    <AvatarFallback className="bg-gray-100 text-gray-600 text-xs">
+                      {user.username?.charAt(0).toUpperCase() || "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span>{user.username || "Loading..."}</span>
+                </>
+              ) : (
+                <div className="h-6 w-6 rounded-full bg-gray-200 animate-pulse" />
+              )}
+              <span className="text-gray-300">|</span>
+              <span>{project.category}</span>
+              <span className="text-gray-300">|</span>
+              <span>{new Date().toLocaleDateString()}</span>
+            </div>
+
+            {/* Read More */}
+            
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
-}
+};
+
+export default NoteCard;
