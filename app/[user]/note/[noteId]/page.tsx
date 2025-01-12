@@ -58,10 +58,10 @@ const NoteDetailsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white w-full">
+    <div className="min-h-screen bg-white w-full flex flex-col items-center">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b">
-        <div className=" mx-auto px-4">
+      <header className="sticky top-0 z-50 bg-white border-b w-full">
+        <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:max-w-[1560px]">
           <div className="h-14 flex items-center justify-between">
             <Button
               variant="ghost"
@@ -107,7 +107,7 @@ const NoteDetailsPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className=" mx-auto px-4 py-8">
+      <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 2xl:max-w-[1560px]">
         <article className="space-y-6">
           {/* Category & Date */}
           <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -117,7 +117,7 @@ const NoteDetailsPage = () => {
           </div>
 
           {/* Title */}
-          <h1 className="text-2xl font-bold text-gray-900">{note.title}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{note.title}</h1>
 
           {/* Author */}
           <div className="flex items-center gap-3 py-4 border-y">
@@ -153,7 +153,7 @@ const NoteDetailsPage = () => {
 };
 
 const LoadingSkeleton = () => (
-  <div className="min-h-screen bg-white  mx-auto px-4 py-8">
+  <div className="min-h-screen bg-white max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 2xl:max-w-[1560px]">
     <div className="space-y-6">
       {/* Category & Date Skeleton */}
       <div className="flex gap-4">

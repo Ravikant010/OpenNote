@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,7 +9,7 @@ import { usernameSchema, passwordSchema } from '@/models/index'
 import Auth from '@/app/(auth)/login/auth'
 import { signup } from '@/services/actions/auth-actions'
 import { useRouter } from 'next/navigation'
-import { ModeToggle } from './theme-toggle'
+import { motion } from 'framer-motion'
 
 export default function SignupForm() {
   const [step, setStep] = useState<1 | 2>(1)
@@ -48,18 +48,20 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
-      {/* Theme toggle in top right */}
-      <div className="absolute top-6 right-6 z-50">
-        {/* <ModeToggle /> */}
-      </div>
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-r from-purple-500/20 via-fuchsia-500/10 to-pink-500/20 blur-[120px] animate-pulse" />
       </div>
 
-      <div className="w-full max-w-xl mx-auto space-y-12 p-8 relative z-10">
+      {/* Main content */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-lg mx-auto space-y-8 p-6 relative z-10"
+      >
+        {/* Header */}
         <div className="text-center space-y-4">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
             Open Note
@@ -69,12 +71,20 @@ export default function SignupForm() {
           </p>
         </div>
 
-        <div className="bg-card/50 backdrop-blur-lg rounded-xl border border-border/50 p-8 space-y-8 shadow-xl">
+        {/* Form container */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-card/80 backdrop-blur-lg rounded-xl border border-border/50 p-8 space-y-6 shadow-2xl"
+        >
+          {/* Auth providers */}
           <Auth />
 
+          {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-border" />
+              <span className="w-full border-t border-border/50" />
             </div>
             <div className="relative flex justify-center text-sm uppercase">
               <span className="bg-card px-4 text-muted-foreground">
@@ -83,6 +93,7 @@ export default function SignupForm() {
             </div>
           </div>
 
+          {/* Step 1: Email input */}
           {step === 1 ? (
             <form onSubmit={handleUsernameSubmit} className="space-y-6">
               <div className="space-y-3">
@@ -97,14 +108,15 @@ export default function SignupForm() {
                   required
                 />
               </div>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white transition-all duration-300"
               >
                 Continue
               </Button>
             </form>
           ) : (
+            /* Step 2: Password input */
             <form onSubmit={handleSignup} className="space-y-6">
               <div className="space-y-3">
                 <Label htmlFor="password" className="text-base">Password</Label>
@@ -118,8 +130,8 @@ export default function SignupForm() {
                   required
                 />
               </div>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white transition-all duration-300"
               >
                 Create Account
@@ -127,20 +139,28 @@ export default function SignupForm() {
             </form>
           )}
 
+          {/* Error message */}
           {error && (
-            <Alert variant="destructive" className="mt-4">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Alert variant="destructive" className="mt-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
+        {/* Sign-in link */}
         <p className="text-center text-base text-muted-foreground">
           Already have an account?{" "}
-          <a href="/login" className="font-medium text-primary hover:underline">
+          <a href="/signin" className="font-medium text-primary hover:underline">
             Sign in
           </a>
         </p>
-      </div>
+      </motion.div>
     </div>
   )
 }

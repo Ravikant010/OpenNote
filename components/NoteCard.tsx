@@ -120,6 +120,7 @@ import { get_user_by_id } from "@/services/actions/User";
 import { User } from "@/db/schema";
 import DOMPurify from "dompurify";
 import { useRouter } from "next/navigation";
+import UserAvatar from "./UserAvatar";
 
 interface NoteCardProps {
   project: {
@@ -171,20 +172,15 @@ export const NoteCard: React.FC<NoteCardProps> = ({ project }) => {
           />
 
           {/* Footer: User Info, Category, and Date */}
-          <div className="text-yellow-400 hover:text-yellow-500 flex items-center">
+          <div className="text-blue-500 flex items-center">
               Read More
               <ChevronRight className="h-4 w-4 ml-1" />
             </div>
-          <div className="flex items-center justify-between pt-4 text-xs text-gray-500">
-            <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-start pt-4 text-xs text-gray-500">
+            <div className="flex items-center space-x-2 justify-start">
               {user ? (
                 <>
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src={user.avatar || ""} alt={user.username || "User"} />
-                    <AvatarFallback className="bg-gray-100 text-gray-600 text-xs">
-                      {user.username?.charAt(0).toUpperCase() || "U"}
-                    </AvatarFallback>
-                  </Avatar>
+              <UserAvatar className="h-6 w-6"/>
                   <span>{user.username || "Loading..."}</span>
                 </>
               ) : (

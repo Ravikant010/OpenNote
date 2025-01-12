@@ -4,12 +4,14 @@ import { users } from '@/db/schema';
 import { getSession } from '@/lib/session';
 import { eq } from 'drizzle-orm';
 import { hashPassword, verifyPassword } from '@/lib/auth';
+import { redirect } from 'next/dist/server/api-utils';
 export async function get_user_id() {
     try {
         const { userId } = await getSession();
      
         if (!userId) {
-            return new Error("Unauthorized");
+            return null
+            // return new Error("Unauthorized");
         }
         return userId
     }
@@ -22,7 +24,8 @@ export async function get_user() {
     try {
         const session = await getSession();
         if (!session?.userId) {
-            throw new Error("Unauthorized");
+            // throw new Error("Unauthorized");
+            return null
         }
         const [user] = await db.select().from(users).where(eq(users.id, session.userId));
         console.log(user, "user");
@@ -40,7 +43,8 @@ export async function get_user_by_id(userId:number) {
     try {
         const session = await getSession();
         if (!session?.userId) {
-            throw new Error("Unauthorized");
+            // throw new Error("Unauthorized");
+            return null
         }
         const [user] = await db.select().from(users).where(eq(users.id,userId));
         console.log(user, "user");

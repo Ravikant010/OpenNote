@@ -29,14 +29,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className=" antialiased">
-      <SidebarProvider defaultOpen={false} className="relative">
+      {/* <SidebarProvider defaultOpen={false} className="relative"> */}
 
           <ThemeProvider>
             {children}
        
           </ThemeProvider>
           <Toaster />
-        </SidebarProvider>
+        {/* </SidebarProvider> */}
         <Analytics />
       </body>
     </html>
