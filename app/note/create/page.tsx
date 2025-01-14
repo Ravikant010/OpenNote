@@ -103,77 +103,106 @@ const Toolbar: React.FC<ToolbarProps> = ({
   setSidebarCollapsed,
 }) => {
   const { toast } = useToast();
+  const savedSelection = useRef<Range | null>(null);
 
-  const handleLink = () => {
-    toast({
-      title: "Insert Link",
-      description: "Enter the URL for the link:",
-      action: (
-        <div className="p-4">
-          <Input
-            id="link-url"
-            placeholder="https://example.com"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                const url = e.currentTarget.value;
-                if (url) {
-                  formatText("createLink", url);
-                  toast({ title: "Link added successfully!" });
-                }
-              }
-            }}
-          />
-        </div>
-      ),
-    });
+  const saveSelection = () => {
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      savedSelection.current = selection.getRangeAt(0).cloneRange();
+    }
+  };
+
+  const restoreSelection = () => {
+    if (savedSelection.current) {
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      selection?.addRange(savedSelection.current);
+    }
+  };
+
+  const handleInputSubmit = (
+    command: string,
+    value: string,
+    successMessage: string
+  ) => {
+    if (value.trim()) {
+      restoreSelection();
+      formatText(command, value.trim());
+      toast({
+        title: successMessage,
+        duration: 2000,
+      });
+    }
   };
 
   const handleImage = () => {
+    saveSelection();
     toast({
       title: "Insert Image",
       description: "Enter the URL for the image:",
       action: (
-        <div className="p-4">
+        <form
+          className="p-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const input = e.currentTarget.querySelector('input');
+            if (input) {
+              handleInputSubmit("insertImage", input.value, "Image added successfully!");
+              input.value = '';
+              document.body.click();
+            }
+          }}
+        >
           <Input
             id="image-url"
             placeholder="https://example.com/image.png"
+            onFocus={() => saveSelection()}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                const url = e.currentTarget.value;
-                if (url) {
-                  formatText("insertImage", url);
-                  toast({ title: "Image added successfully!" });
-                }
+                e.preventDefault();
+                handleInputSubmit("insertImage", e.currentTarget.value, "Image added successfully!");
+                e.currentTarget.value = '';
+                document.body.click();
               }
             }}
           />
-        </div>
+        </form>
       ),
     });
   };
 
   const handleColor = (type: "foreColor" | "backColor") => {
+    saveSelection();
     toast({
       title: `Set ${type === "foreColor" ? "Text" : "Background"} Color`,
       description: `Enter a color (e.g., red, #ff0000):`,
       action: (
-        <div className="p-4">
+        <form
+          className="p-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const input = e.currentTarget.querySelector('input');
+            if (input) {
+              handleInputSubmit(type, input.value, "Color applied successfully!");
+              input.value = '';
+              document.body.click();
+            }
+          }}
+        >
           <Input
             id="color-input"
-            placeholder={
-              type === "foreColor" ? "Text color" : "Background color"
-            }
+            placeholder={type === "foreColor" ? "Text color" : "Background color"}
+            onFocus={() => saveSelection()}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                const color = e.currentTarget.value;
-                if (color) {
-                  formatText(type, color);
-                  toast({ title: `Color applied successfully!` });
-                }
+                e.preventDefault();
+                handleInputSubmit(type, e.currentTarget.value, "Color applied successfully!");
+                e.currentTarget.value = '';
+                document.body.click();
               }
             }}
           />
-        </div>
+        </form>
       ),
     });
   };
@@ -382,7 +411,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         {/* Insert */}
         <div className="flex flex-col">
           <div className="flex gap-2">
-            <ToolbarButton icon={Link} onClick={handleLink} label="Link" />
+            <ToolbarButton icon={Link} onClick={() => handleInputSubmit("createLink", "", "Link added successfully!")} label="Link" />
             <ToolbarButton icon={Image} onClick={handleImage} label="Image" />
           </div>
         </div>
