@@ -30,11 +30,11 @@ export default function RootLayout({
     <html lang="en">
       <body className=" antialiased">
       {/* <SidebarProvider defaultOpen={false} className="relative"> */}
-
-          <ThemeProvider>
+{/* 
+          <ThemeProvider> */}
             {children}
        
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
           <Toaster />
         {/* </SidebarProvider> */}
         <Analytics />
