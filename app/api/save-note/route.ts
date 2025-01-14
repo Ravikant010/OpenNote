@@ -1,6 +1,5 @@
-
 import { getSession } from '@/lib/session';
-import { saveNote } from '@/services/actions/saveNote';
+import { create_note } from '@/services/actions/saveNote';
 import { z } from 'zod';
 import { get_user } from '@/services/actions/user-action';
 import { NextResponse } from 'next/server';
@@ -16,7 +15,7 @@ export async function POST(req: Request) {
     noteData.createdAt = new Date(noteData.createdAt);
     noteData.updatedAt = new Date(noteData.updatedAt);
     console.log(noteData)
-    const newNote = await saveNote(noteData, session.userId);
+    const newNote = await create_note(noteData);
     const user = await get_user();
     console.log(user)
   return new Response(JSON.stringify({ success: true, data: {...newNote, ...user} }))

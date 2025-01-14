@@ -2,8 +2,9 @@ import { formats } from "@/app/note/create/_components/rich-text/config";
 import Quill from "quill";
 import { RefObject } from "react";
 
-export default function TextFormatting(option:string,value:string, quillRef: RefObject<Quill>){
 
+export default function TextFormatting(option:string,value:string, quillRef: RefObject<Quill>){
+    console.log(value, option)
     switch (option) {
           case "color":
             const colorFormatFunction: any =

@@ -250,7 +250,7 @@ const CategoryBadge: React.FC<CategoryBadgeProps> = ({ Icon, text }) => (
   </div>
 );
 // Export components
-export { SectionTitle, ProcessCard, CategoryBadge };
+
 
 const LandingPage = async() => {
   const categories = [
@@ -409,38 +409,33 @@ const LandingPage = async() => {
 
   const notes = await get_notes()
   return (
-  //  <CommunityNotes notes = {notes}/>
-  // <NewsPage />
-  <div className="container mx-auto px-4 py-8">
-  {/* Header Section */}
-  <div className="mb-8">
-    <div className="flex justify-between flex-row-reverse">   {userId && <PopMenu userId={Number(userId)}/>}<h1 className="text-3xl font-bold mb-4">Open Note</h1> </div>
-    <div className="flex gap-4 mb-6">
-      <button className="text-sm font-medium hover:text-blue-500">latest</button>
-      <button className="text-sm font-medium hover:text-blue-500">popular</button>
-      <button className="text-sm font-medium hover:text-blue-500">Research & Publications</button>
-      
+    <div className="container mx-auto px-4 py-8">
+    {/* Header Section */}
+    <div className="mb-8">
+      <div className="flex justify-between items-center flex-row-reverse">
+        {userId && <PopMenu userId={Number(userId)} />}
+        <h1 className="text-3xl font-bold">Open Note</h1>
+      </div>
+      <div className="flex gap-4 mb-6">
+        <button className="text-sm font-medium hover:text-blue-500">Latest</button>
+        <button className="text-sm font-medium hover:text-blue-500">Popular</button>
+        <button className="text-sm font-medium hover:text-blue-500">Research & Publications</button>
+      </div>
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+        <Input className="pl-10 w-full max-w-xl" placeholder="Enter your search terms..." />
+      </div>
     </div>
-  
-    {/* Search Bar */}
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-      <Input 
-        className="pl-10 w-full max-w-xl" 
-        placeholder="Enter your search terms..."
-      />
-    </div>
-  </div>
-<CategoryBadges/>
-  {/* News Grid */}
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <CategoryBadges />
 
-    <CommunityNotes notes={notes}/>
-    {!notes.length && <>no notes yet</> }
-    </div>
-    </div>
+    <CommunityNotes notes={notes} />
+  
+    {!notes.length && <p className="text-center mt-4">No notes yet</p>}
+  </div>
+  
   );
 };
+
 export default LandingPage;
 
 import { Card, CardContent, CardTitle } from "@/components/ui/card";

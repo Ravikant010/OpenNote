@@ -156,7 +156,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ project }) => {
   );
 
   return (
-    <Card className="w-fit  bg-gray-50 transition-colors duration-200 cursor-pointer border-0 shadow-none round"
+    <Card className="w-full   transition-colors duration-200 cursor-pointer border-0 shadow-none round bg-tra"
           onClick={() => router.push(`/${user?.username}/note/${project.note_id}`)}>
       <CardContent className="p-6 w-full">
         <div className="space-y-4">
@@ -184,7 +184,18 @@ export const NoteCard: React.FC<NoteCardProps> = ({ project }) => {
                   <span>{user.username || "Loading..."}</span>
                 </>
               ) : (
-                <div className="h-6 w-6 rounded-full bg-gray-200 animate-pulse" />
+                <Avatar className={`h-10 w-10 `}>
+                {/* Avatar Image */}
+                <AvatarImage
+                  src={`https://api.dicebear.com/7.x/pixel-art/svg/${Math.random()}`} // Use the user's avatar URL or fallback to an empty string
+                  alt={"User"} // Use the username as alt text or fallback to "User"
+                />
+          
+                {/* Avatar Fallback */}
+                <AvatarFallback className="bg-gray-100 text-gray-600 text-xs">
+                 user
+                </AvatarFallback>
+              </Avatar>
               )}
               <span className="text-gray-300">|</span>
               <span>{project.category}</span>

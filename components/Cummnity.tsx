@@ -9,22 +9,20 @@ export const CommunityNotes = ({ notes }: { notes: Note[] }) => {
   const [activeFilter, setActiveFilter] = useState("latest");
 
   return (
-      <div className="container mx-auto px-4 py-8 w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-          {notes.map((note, index) => (
-            <NoteCard
-              key={index}
-              project={{
-                title: note.title,
-                description: note.content,
-                userId: note.userId,
-                note_id: note.id,
-                category: note.category || "General",
-              }}
-            />
-          ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ">
+      {notes.map((note) => (
+        <div key={note.id}>
+          <NoteCard
+            project={{
+              title: note.title,
+              description: note.content,
+              userId: note.userId,
+              note_id: note.id,
+              category: Array.isArray(note.tags) && note.tags.length > 0 ? note.tags[0] : "General",
+            }}
+          />
         </div>
-      </div>
-    
+      ))}
+    </div>
   );
 };

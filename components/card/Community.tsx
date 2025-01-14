@@ -15,6 +15,8 @@ const communityProjects = [
     username: "john_doe",
     avatarUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Math.random()}`, // Random avatar URL
     category: "Tech",
+    userId: 1,
+    note_id: 1
   },
   {
     title: "Open-Source Documentation",
@@ -23,6 +25,8 @@ const communityProjects = [
     username: "jane_doe",
     avatarUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Math.random()}`, // Random avatar URL
     category: "Tech",
+    userId: 2,
+    note_id: 2
   },
   {
     title: "Improving Web Accessibility",
@@ -31,6 +35,8 @@ const communityProjects = [
     username: "mark_smith",
     avatarUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Math.random()}`, // Random avatar URL
     category: "Tech",
+    userId: 3,
+    note_id: 3
   },
   {
     title: "Healthy Eating for Busy Professionals",
@@ -39,6 +45,8 @@ const communityProjects = [
     username: "lucy_adams",
     avatarUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Math.random()}`, // Random avatar URL
     category: "Health",
+    userId: 4,
+    note_id: 4
   },
   {
     title: "Fitness Training for Beginners",
@@ -47,6 +55,8 @@ const communityProjects = [
     username: "sara_brown",
     avatarUrl: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Math.random()}`, // Random avatar URL
     category: "Health",
+    userId: 5,
+    note_id: 5
   },
   // Add more community-driven projects as needed
 ];

@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   },
   // Configure TypeScript paths
   typescript: {
+    
     // Disable type checking during build for performance
     ignoreBuildErrors: false,
   },
@@ -45,6 +46,7 @@ const nextConfig: NextConfig = {
         '.json',
       ],
     },
+    
   }
 };
 

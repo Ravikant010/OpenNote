@@ -1,35 +1,35 @@
 "use server"
-import { db } from '@/db/db';
-import { notes } from '@/db/schema';
-import { noteSchema } from '@/models';// Assuming you have a validation schema for notes
-import { get_user_id } from './User';
-/**
- * Creates a new note for the authenticated user.
- * @param {object} note - The note data to be validated and inserted.
- * @returns {Promise<object | null>} The newly created note or null if an error occurs.
- */
-export async function create_note(note: unknown) {
-  try {
-    // Fetch the authenticated user's ID
-    let userId = await get_user_id();
 
-    // Check if the user is authenticated
-    if (!userId) {
-      console.warn("Unauthorized: User ID not found.");
-      return null;
-    }
-    userId = Number(userId)
-    // Validate the note data using the schema
-    const validatedNote = noteSchema.parse(note);
+import { db } from "@/db/db";
+import { notes } from "@/db/schema";
+import { get_user } from "./user-action";
 
-    // Insert the note into the database
-    const [newNote] = await db.insert(notes).values({ ...validatedNote, userId }).returning();
+export async function create_note(note: {
+  title: string;
+  content: string;
+  isPublic: boolean;
+  tags: string[] | null;
+}) {
+  const user = await get_user();
+  if (!user) throw new Error("User not found");
 
-    // Return the newly created note
-    return newNote;
-  } catch (error) {
-    // Log the error and return null
-    console.error("Error creating note:", error);
-    return null;
-  }
+  const [savedNote] = await db
+    .insert(notes)
+    .values({
+      ...note,
+      userId: user.id,
+    })
+    .returning();
+
+  return { success: true, data: savedNote };
+}
+
+// If you need saveNote functionality, add it here:
+export async function saveNote(note: {
+  title: string;
+  content: string;
+  isPublic: boolean;
+  tags: string[] | null;
+}) {
+  return create_note(note);
 }

@@ -14,9 +14,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import UserAvatar from "@/components/UserAvatar";
+import { Note } from "@/db/schema";
 
 const NoteDetailsPage = () => {
-  const [note, setNote] = useState(null);
+  const [note, setNote] = useState<Note | null>(null);
+  const [user_in_db, set_user_in_db] = useState<{ username: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
   const router = useRouter();
@@ -29,12 +32,13 @@ const NoteDetailsPage = () => {
       try {
         const response = await fetch(`/api/note/?user=${user}&noteId=${noteId}`);
         if (!response.ok) throw new Error("Failed to fetch note");
-        const { note } = await response.json();
-        setNote(note);
+        const { note, user_in_db } = await response.json();
+        setNote(note as Note);
+        set_user_in_db(user_in_db);
       } catch (error) {
         toast({
           title: "Error",
-          description: error.message,
+          description: error instanceof Error ? error.message : "Failed to fetch note",
           variant: "destructive",
           duration: 3000,
         });
@@ -110,25 +114,23 @@ const NoteDetailsPage = () => {
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 2xl:max-w-[1560px]">
         <article className="space-y-6">
           {/* Category & Date */}
-          <div className="flex items-center gap-4 text-sm text-gray-500">
-            <span>{note.category}</span>
-            <span>•</span>
-            <time>{new Date(note.createdAt).toLocaleDateString()}</time>
-          </div>
+     
 
           {/* Title */}
+     
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{note.title}</h1>
-
+          <time>{new Date(note.createdAt).toLocaleDateString()}</time>
           {/* Author */}
           <div className="flex items-center gap-3 py-4 border-y">
-            <Avatar className="h-10 w-10">
+            {/* <Avatar className="h-10 w-10">
               <AvatarImage src={note.user?.avatar} alt={note.user?.username} />
               <AvatarFallback className="bg-gray-100 text-gray-600">
                 {note.user?.username?.[0]?.toUpperCase() || "U"}
               </AvatarFallback>
-            </Avatar>
+            </Avatar> */}
+            <UserAvatar />
             <div>
-              <div className="font-medium text-gray-900">{note.user?.username}</div>
+              <div className="font-medium text-gray-900">{user_in_db?.username}</div>
               <div className="text-sm text-gray-500">Author</div>
             </div>
           </div>

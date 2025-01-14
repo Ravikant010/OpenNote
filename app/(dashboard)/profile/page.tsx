@@ -1,66 +1,70 @@
 "use server"
-import { getSession } from "@/lib/session";
-import { db } from "@/db/db";
-import { notes, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import NoteCard, { Note } from "@/components/note-card";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
-import { getAllNotes, getNotes } from "@/services/actions/notes";
-import ProfilePage from "./_note/_note";
 import { get_user } from "@/services/actions/user-action";
+import { getAllNotes } from "@/services/actions/notes";
+import ProfilePage from "./_note/_note";
 import Link from "next/link";
-import { PlusCircle, BookOpen } from "lucide-react";
+import { PlusCircle, BookOpen, FileText } from "lucide-react";
+import { Note, User } from "@/db/schema";
 
 export default async function Profile() {
-  const user = await get_user();
-  const { data } = await getAllNotes()
+  const user = await get_user() as User;
+  const { data, success } = await getAllNotes();
 
-if(data?.length){
+  if(success && data?.length) {
     return (
-      <div>
-        {/* @ts-ignore */}
-        <ProfilePage notes={[...data]} user={user} />
+      <div className="container mx-auto px-4 py-8">
+        <ProfilePage 
+          notes={data.map(note => ({ 
+            ...note, 
+            // Parse tags if they're stored as a string, otherwise keep as is
+            tags: typeof note.tags === 'string' ? JSON.parse(note.tags) : note.tags,
+            createdAt: note.createdAt.toISOString(),
+            updatedAt: note.updatedAt.toISOString()
+          }))} 
+          user={user} 
+        />
       </div>
     );
   }
-  return <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-6">
-  {/* Icon or Illustration */}
-  <div className="mb-6">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-20 w-20 text-gray-400"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-      />
-    </svg>
-  </div>
 
-  {/* Heading */}
-  <h2 className="text-2xl font-bold text-gray-800 mb-2">
-    No Notes Created Yet
-  </h2>
+  return (
+    <div className="container mx-auto px-4">
+      <div className="flex flex-col items-center justify-center min-h-[80vh] max-w-md mx-auto">
+        {/* Empty State Icon */}
+        <div className="mb-8">
+          <FileText className="h-24 w-24 text-gray-300" />
+        </div>
 
-  {/* Description */}
-  <p className="text-gray-600 mb-6">
-    Start organizing your thoughts and ideas by creating your first note!
-  </p>
+        {/* Content */}
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold tracking-tight">
+            Your Notes Journey Begins
+          </h2>
+          
+          <p className="text-muted-foreground text-lg">
+            Create your first note and start organizing your thoughts in one place.
+          </p>
 
-  {/* Call-to-Action Button */}
-  <Link href="/note/create"
-    className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-  
-  >
-    Create Your First Note
-  </Link>
-</div>
-  // return  redirect("/login");
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <Link 
+              href="/note/create"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
+              <PlusCircle className="mr-2 h-5 w-5" />
+              Create Note
+            </Link>
+            
+            <Link 
+              href="/help"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors"
+            >
+              <BookOpen className="mr-2 h-5 w-5" />
+              View Guide
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
