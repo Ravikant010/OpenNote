@@ -24,8 +24,8 @@ const NoteDetailsPage = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { toast } = useToast();
-  const user = pathname.split("/")[1];
-  const noteId = pathname.split("/")[3];
+  const user = pathname.split("/")[2];
+  const noteId = pathname.split("/")[4];
 
   useEffect(() => {
     const fetchNote = async () => {

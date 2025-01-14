@@ -6,6 +6,8 @@ import Link from "next/link";
 import { PlusCircle, BookOpen, FileText } from "lucide-react";
 import { Note, User } from "@/db/schema";
 
+
+
 export default async function Profile() {
   const user = await get_user() as User;
   const { data, success } = await getAllNotes();

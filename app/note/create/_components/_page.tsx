@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { CircleChevronUp, ChevronLeft, Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import RichTextMenu from "./_components/rich-text";
+import RichTextMenu from "./rich-text";
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,7 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { useRouter } from "next/navigation";
-import QuillEditor from "./_components/QuillEditor";
+import QuillEditor from "./QuillEditor";
 import { ModeToggle } from "@/components/theme-toggle";
 
 export default function CreateNotePage() {

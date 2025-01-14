@@ -1,4 +1,4 @@
-
+"use server"
 import AnimateOnScroll from "@/components/animation";
 import CommunitySection from "@/components/card/Community";
 import Features from "@/components/card/InfoCard";
@@ -6,6 +6,8 @@ import { TypewriterEffectSmoothDemo } from "@/components/typewriter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowDown, LogIn } from "lucide-react";
 import React from "react";
+
+
 const Hero = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-50 flex flex-col">

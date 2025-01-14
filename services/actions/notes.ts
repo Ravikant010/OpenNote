@@ -1,3 +1,4 @@
+"use server"
 import { noteSchema, Note } from "@/lib/schema/note";
 import { db } from "@/db/db";
 import { notes } from "@/db/schema";

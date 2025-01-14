@@ -157,7 +157,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({ project }) => {
 
   return (
     <Card className="w-full   transition-colors duration-200 cursor-pointer border-0 shadow-none round bg-tra"
-          onClick={() => router.push(`/${user?.username}/note/${project.note_id}`)}>
+          onClick={() => router.push(`/user/${user?.username}/note/${project.note_id}`)}>
       <CardContent className="p-6 w-full">
         <div className="space-y-4">
           {/* Title */}
