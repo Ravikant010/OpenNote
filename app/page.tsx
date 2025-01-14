@@ -419,16 +419,16 @@ const LandingPage = async() => {
         <h1 className="text-3xl font-bold">Open Note</h1>
       </div>
       <div className="flex gap-4 mb-6">
-        <button className="text-sm font-medium hover:text-blue-500">Latest</button>
+        {/* <button className="text-sm font-medium hover:text-blue-500">Latest</button>
         <button className="text-sm font-medium hover:text-blue-500">Popular</button>
-        <button className="text-sm font-medium hover:text-blue-500">Research & Publications</button>
+        <button className="text-sm font-medium hover:text-blue-500">Research & Publications</button> */}
       </div>
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-        <Input className="pl-10 w-full max-w-xl" placeholder="Enter your search terms..." />
+        {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" /> */}
+        {/* <Input className="pl-10 w-full max-w-xl" placeholder="Enter your search terms..." /> */}
       </div>
     </div>
-    <CategoryBadges />
+    {/* <CategoryBadges /> */}
 
     <CommunityNotes notes={notes} />
   
