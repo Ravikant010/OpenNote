@@ -1,4 +1,4 @@
-"use server"
+
 import AnimateOnScroll from "@/components/animation";
 import CommunitySection from "@/components/card/Community";
 import Features from "@/components/card/InfoCard";
@@ -266,7 +266,7 @@ const LandingPage = async() => {
   ];
   //@ts-ignore
   const userId = await get_user_id()
-  console.log(userId, "dfsfsdfdfdf")
+
   if(!userId)
   return (
     <div className="relative w-full font-sans">

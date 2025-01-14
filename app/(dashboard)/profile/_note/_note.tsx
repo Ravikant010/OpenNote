@@ -1,8 +1,8 @@
 "use client";
-import { redirect } from "next/navigation";
+
 import NoteCard from "@/components/note-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import { User } from "@/db/schema";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
