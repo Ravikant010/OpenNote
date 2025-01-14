@@ -53,7 +53,7 @@ const Hero = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
           {/* Get Started Button */}
-          <Link href = {"/"}className="flex items-center justify-center gap-2 px-8 py-3 text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200">
+          <Link href = {"/note/create"}className="flex items-center justify-center gap-2 px-8 py-3 text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200">
             <span>Get Started</span>
             <ArrowRight className="w-5 h-5" />
           </Link>
