@@ -24,6 +24,9 @@ export default {
   		}
   	},
   	extend: {
+		fontFamily: {
+        'della-respira': ['"Licorice"', 'cursive'],
+      },
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
